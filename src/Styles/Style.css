@@ -1,6 +1,9 @@
-header {
+nav {
   position: absolute;
   z-index: 10;
+}
+.bg-dark {
+  background-color: transparent !important;
 }
 
 .banner {

@@ -6,58 +6,57 @@ class Navbar extends Component {
   state = {};
   render() {
     return (
-      <header>
-        <nav className="navbar navbar-expand-lg navbar-light ">
-          <NavLink className="navbar-brand text-light" to="/" exact>
+      <nav
+        className="navbar navbar-expand-lg navbar-dark fixed-top"
+        id="mainNav"
+      >
+        <div className="container">
+          <a className="navbar-brand js-scroll-trigger" href="#page-top">
             WHYURU
-          </NavLink>
+          </a>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler navbar-toggler-right"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-target="#navbarResponsive"
+            aria-controls="navbarResponsive"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            Menu
+            <i className="fa fa-bars"></i>
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <NavLink
-                  activeClassName="activate"
-                  className="nav-link text-light"
-                  to="/"
-                  exact
-                >
+          <div className="collapse navbar-collapse" id="navbarResponsive">
+            <ul className="navbar-nav text-uppercase ml-auto">
+              <li className="nav-item">
+                <a className="nav-link js-scroll-trigger" href="#services">
                   Home
-                </NavLink>
+                </a>
               </li>
-              <li class="nav-item">
-                <NavLink
-                  activeClassName="activate"
-                  className="nav-link text-light"
-                  to="/BigFive"
-                  exact
-                >
+              <li className="nav-item">
+                <a className="nav-link js-scroll-trigger" href="#portfolio">
                   Big Five
-                </NavLink>
+                </a>
               </li>
-              <li class="nav-item">
-                <NavLink
-                  activeClassName="activate"
-                  className="nav-link text-light"
-                  to="/TheMind "
-                  exact
-                >
+              <li className="nav-item">
+                <a className="nav-link js-scroll-trigger" href="#about">
                   The Mind
-                </NavLink>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link js-scroll-trigger" href="#team">
+                  Team
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link js-scroll-trigger" href="#contact">
+                  Contact
+                </a>
               </li>
             </ul>
           </div>
-        </nav>
-      </header>
+        </div>
+      </nav>
     );
   }
 }
