@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import Banner from "../Components/Banner";
+import OpportunityMeeting from "../Components/OpportunityMeeting";
+import Qoutes from "../Components/Qoutes";
+import Footer from "../Components/Footer";
 
 class Home extends Component {
   state = {};
@@ -7,6 +10,9 @@ class Home extends Component {
     return (
       <div>
         <Banner />
+        <OpportunityMeeting />
+        <Qoutes />
+        <Footer />
       </div>
     );
   }
