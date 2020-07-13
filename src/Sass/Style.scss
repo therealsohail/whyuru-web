@@ -1,0 +1,19 @@
+@import "./Navbar";
+
+@import "./Banner";
+
+@import "./Footer";
+
+body {
+  box-sizing: border-box;
+}
+
+.qoute-container {
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../Assets/beach.jpg");
+  min-height: 40vh;
+  background-size: cover;
+  background-position: center;
+  padding: 250px 0 200px;
+}

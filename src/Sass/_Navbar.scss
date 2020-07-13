@@ -1,0 +1,8 @@
+.bg-light {
+  background-color: transparent !important;
+  transition: 0.75s ease;
+}
+
+.bg-light.scrolled {
+  background-color: #fff !important;
+}

@@ -1,11 +1,6 @@
-/* header {
-  position: absolute;
-  z-index: 10;
-}
-*/
-
 .bg-light {
   background-color: transparent !important;
+  -webkit-transition: 0.75s ease;
   transition: 0.75s ease;
 }
 
@@ -26,16 +21,25 @@
   font-family: "Montserrat";
   /* font-size: 22px; */
 }
+
 .banner-heading {
   font-size: 45px;
 }
+
+.article {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
 .opp-meeting {
   margin-top: 30px;
 }
+
 .opp-container {
   width: 250px;
   height: 250px;
 }
+
 .opp-heading {
   font-family: "Montserrat";
   color: #026fc2;
@@ -48,40 +52,55 @@
 .opp-image {
   max-width: 100%;
   max-height: 100%;
-  display: block; /* remove extra space below image */
+  display: block;
+  /* remove extra space below image */
   /* background-position: center; */
 }
+
 .opp-content {
   font-family: "Montserrat";
   color: #8f8686;
   line-height: 30px;
   font-weight: normal;
 }
+
 .opp-row {
   margin-top: 50px;
 }
-.qoute-container {
-  position: relative;
-  background: url("../Assets/beach.jpg");
-  min-height: 40vh;
-  background-size: cover;
-  background-position: center;
-  padding: 250px 0 200px;
-}
+
 .footer {
   background-color: black;
   position: relative;
   min-height: 60vh;
 }
+
 .footer-content {
   margin-top: 40px;
 }
+
 .footer-heading {
   color: white;
   font-family: "Montserrat";
 }
+
 .footer-list {
   color: white;
+  padding: 0;
   font-family: "Montserrat";
   list-style-type: none;
+}
+
+body {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.qoute-container {
+  position: relative;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url("../Assets/beach.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../Assets/beach.jpg");
+  min-height: 40vh;
+  background-size: cover;
+  background-position: center;
+  padding: 250px 0 200px;
 }
