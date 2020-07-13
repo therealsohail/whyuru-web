@@ -65,5 +65,35 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+    <script>
+     $(window).scroll(function(){
+ $('nav').toggleClass('scrolled', $(this).scrollTop() > 200);
+ });
+
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 200) {
+        $("#navbar").removeClass("navbar-dark");
+        $("#navbar").addClass("navbar-light");
+      } else {
+        $("#navbar").removeClass("navbar-light");
+        $("#navbar").addClass("navbar-dark");
+      }
+    })
+
+     
+
+      // function replaceClass(id, oldClass, newClass) {
+      //   var elem = document.getElementById(id);
+      //   console.log(elem);
+      //   elem.className.remove(oldClass);
+      //   elem.className.add(newClass);
+      // }
+      // if(window.pageYOffset > 200) {
+      //   replaceClass("navbar", "navbar navbar-expand-lg fixed-top navbar-dark bg-light", "navbar navbar-expand-lg fixed-top navbar-light bg-light")
+      // }else {
+      //   replaceClass("navbar", "navbar navbar-expand-lg fixed-top navbar-light bg-light", "navbar navbar-expand-lg fixed-top navbar-dark bg-light")
+      // }
+  
+    </script>
   </body>
 </html>

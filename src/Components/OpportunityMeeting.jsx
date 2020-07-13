@@ -9,7 +9,12 @@ class OpportunityMeeting extends Component {
         <h4 className="opp-heading">Oportunity meeting preperation</h4>
         <div className="row opp-row">
           <div className="col-sm-6 opp-container">
-            <img className="opp-image" src={image} alt="" />
+            <img
+              className="opp-image img-fluid"
+              style={{ width: "200px" }}
+              src={image}
+              alt=""
+            />
           </div>
           <div className="col-sm-6 opp-content">
             <p>
