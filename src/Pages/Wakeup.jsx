@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Banner from "../Components/Banner";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import wakeupHero from "../Assets/wakeup.jpg";
 import { client } from "../client";
