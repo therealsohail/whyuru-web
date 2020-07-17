@@ -3,20 +3,20 @@ import "../Styles/Style.css";
 
 class Banner extends Component {
   state = {};
+
   render() {
+    const style = {
+      backgroundImage: "url(" + this.props.pic + ")",
+    };
     return (
-      <div className="banner">
+      <div style={style} className="banner">
         <div className="container">
           <div className="row">
             <div className="col-sm-6 banner-content">
               <h1 className="text-light banner-heading">
-                Lorem Ipsum set amet
+                {this.props.heading}
               </h1>
-              <p className="text-light">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s
-              </p>
+              <p className="text-light">{this.props.subHeading}</p>
             </div>
           </div>
         </div>
