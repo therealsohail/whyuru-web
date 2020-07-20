@@ -17,10 +17,17 @@
       crossorigin="anonymous"
     />
     <link
-      href="//fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,100,200,300,400,500,600,700,800"
+      href="//fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,100,200,300,400,500,600,700,800|Lato "
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.13.1/css/all.css"
+      integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q"
+      crossorigin="anonymous"
+    />
+
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -66,34 +73,112 @@
       crossorigin="anonymous"
     ></script>
     <script>
-     $(window).scroll(function(){
- $('nav').toggleClass('scrolled', $(this).scrollTop() > 200);
- });
+      $(window).scroll(function () {
+        $("nav").toggleClass("scrolled", $(this).scrollTop() > 200);
+      });
 
-    $(window).scroll(function() {
-      if ($(window).scrollTop() > 200) {
-        $("#navbar").removeClass("navbar-dark");
-        $("#navbar").addClass("navbar-light");
-      } else {
-        $("#navbar").removeClass("navbar-light");
-        $("#navbar").addClass("navbar-dark");
-      }
-    })
+      $(window).scroll(function () {
+        if ($(window).scrollTop() > 200) {
+          $("#navbar").removeClass("navbar-dark");
+          $("#navbar").addClass("navbar-light");
+        } else {
+          $("#navbar").removeClass("navbar-light");
+          $("#navbar").addClass("navbar-dark");
+        }
+      });
 
-     
+      $(window).scroll(function () {
+        if ($(window).scrollTop() > 200) {
+          $(".navbar").css({
+            "-webkit-box-shadow": "0 8px 6px -6px #999",
+            "-moz-box-shadow": "0 8px 6px -6px #999",
+            "box-shadow": "0 8px 6px -6px #999",
+          });
+        } else {
+          $(".navbar").css({
+            "-webkit-box-shadow": "none",
+            "-moz-box-shadow": "none",
+            "box-shadow": "none",
+          });
+        }
+      });
 
-      // function replaceClass(id, oldClass, newClass) {
-      //   var elem = document.getElementById(id);
-      //   console.log(elem);
-      //   elem.className.remove(oldClass);
-      //   elem.className.add(newClass);
-      // }
-      // if(window.pageYOffset > 200) {
-      //   replaceClass("navbar", "navbar navbar-expand-lg fixed-top navbar-dark bg-light", "navbar navbar-expand-lg fixed-top navbar-light bg-light")
-      // }else {
-      //   replaceClass("navbar", "navbar navbar-expand-lg fixed-top navbar-light bg-light", "navbar navbar-expand-lg fixed-top navbar-dark bg-light")
-      // }
-  
+      $(function () {
+        var nav = $("#navbar");
+        $(window).scroll(function () {
+          var scroll = $(window).scrollTop();
+          if (scroll < 200) {
+            if (
+              nav.attr("class") ===
+              "navbar navbar-expand-sm fixed-top navbar-dark bg-light"
+            ) {
+              $(".navbar-toggler").click(function () {
+                $(nav).removeClass("bg-light").addClass("bg-dark");
+              });
+            } else {
+            }
+          }
+        });
+      });
+
+      // $(window).scroll(function() {
+      //   if($(window).scrollTop() < 400) {
+
+      //   $(".navbar-toggler").click(function () {
+      //   $("#navbar").addClass ("bg-dark");
+      //   })
+
+      //   }
+
+      // })
+      $(document).ready(function () {
+        $(".cat-nav").click(function () {
+          var listItems = $(".cat-nav");
+
+          for (let i = 0; i < listItems.length; i++) {
+            listItems[i].classList.remove("active");
+          }
+
+          this.classList.add("active");
+        });
+      });
+
+      $(document).ready(function () {
+        $(".items").slick({
+          dots: true,
+          infinite: true,
+          speed: 800,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true,
+              },
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+              },
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+              },
+            },
+          ],
+        });
+      });
     </script>
   </body>
 </html>

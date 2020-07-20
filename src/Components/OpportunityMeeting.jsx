@@ -7,13 +7,17 @@ class OpportunityMeeting extends Component {
   };
 
   componentDidMount() {
-    client.getEntries().then((response) => {
-      console.log(response);
-      this.setState({
-        articles: response.items,
+    client
+      .getEntries({
+        content_type: "opportunityMeetingPreparation",
+      })
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          articles: response.items,
+        });
+        console.log(this.state);
       });
-      console.log(this.state);
-    });
   }
 
   render() {

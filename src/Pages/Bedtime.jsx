@@ -62,7 +62,7 @@ const Bedtime = () => {
       <Banner pic={bedtimeHero} heading="Bedtime" />
       <div className="container">
         <div className="language-section">
-          <img src={lang} width="40" height="32" />
+          <img src={lang} width="40" height="32" alt="image" />
           <select
             id="exampleFormControlSelect1"
             onChange={handleLanguageChange}

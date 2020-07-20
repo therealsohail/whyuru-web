@@ -8,9 +8,12 @@
   background-color: #fff !important;
 }
 
+.nav-item {
+  color: #000;
+}
+
 .banner {
   position: relative;
-  background: url("../Assets/Banner.jpg");
   min-height: 60vh;
   background-size: cover;
   background-position: center;
@@ -68,6 +71,17 @@
   margin-top: 50px;
 }
 
+@media (max-width: 600px) {
+  .opp-container {
+    width: 100%;
+    margin: 0 82px;
+  }
+  .opp-image {
+    width: 150px;
+    margin: auto;
+  }
+}
+
 .footer {
   background-color: black;
   position: relative;
@@ -90,12 +104,46 @@
   list-style-type: none;
 }
 
+.carousel {
+  position: relative;
+  min-height: 60vh;
+  background-size: cover;
+  background-position: center;
+  padding: 250px 0 200px;
+  width: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.test-name {
+  text-align: center;
+  color: #fff;
+  font-family: "Montserrat";
+  font-weight: 700;
+}
+
+.test-review {
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+  font-family: "Montserrat";
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.test-occupation {
+  text-align: center;
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 1rem;
+}
+
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-.qoute-container {
+.carousel {
   position: relative;
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url("../Assets/beach.jpg");
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../Assets/beach.jpg");
@@ -103,4 +151,18 @@ body {
   background-size: cover;
   background-position: center;
   padding: 250px 0 200px;
+}
+
+.fa-language {
+  padding-top: 40px;
+  margin-right: 10px;
+}
+
+.category-nav {
+  padding-top: 40px;
+}
+
+.language-section {
+  float: right;
+  padding-top: 20px !important;
 }
