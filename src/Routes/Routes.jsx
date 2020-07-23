@@ -6,6 +6,8 @@ import TheMind from "../Pages/TheMind";
 import Bedtime from "../Pages/Bedtime";
 import Navbar from "../Components/Navbar";
 import Wakeup from "../Pages/Wakeup";
+import BlogPost from "../Pages/BlogPost";
+import Blogs from "../Pages/Blogs";
 
 class Routes extends Component {
   state = {};
@@ -21,6 +23,8 @@ class Routes extends Component {
               <Route path="/wakeup" component={Wakeup} />
               <Route path="/BigFive" component={BigFive} />
               <Route path="/TheMind" component={TheMind} />
+              <Route path="/blog/:id" component={BlogPost} />
+              <Route path="/blogs" component={Blogs} />
             </Switch>
           </div>
         </BrowserRouter>

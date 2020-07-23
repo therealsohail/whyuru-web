@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../Styles/Style.css";
 
-class Banner extends Component {
+export class Banner extends Component {
   state = {};
 
   render() {
@@ -25,4 +25,24 @@ class Banner extends Component {
   }
 }
 
-export default Banner;
+export class BlogBanner extends Component {
+  render() {
+    const style = {
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(  ${this.props.pic}  )`,
+    };
+    return (
+      <div style={style} className="blog-banner">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-6 blog-banner-content">
+              <h1 className="text-light blog-banner-heading">
+                {this.props.heading}
+              </h1>
+              <p className="text-light">{this.props.subHeading}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

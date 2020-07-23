@@ -82,6 +82,23 @@
   }
 }
 
+.blog-banner {
+  position: relative;
+  min-height: 60vh;
+  background-size: cover;
+  background-position: center;
+  padding: 250px 0 200px;
+}
+
+.blog-banner-content {
+  font-family: "Montserrat";
+  /* font-size: 22px; */
+}
+
+.blog-banner-heading {
+  font-size: 45px;
+}
+
 .footer {
   background-color: black;
   position: relative;
@@ -136,6 +153,17 @@
   color: #fff;
   font-family: "Montserrat";
   font-size: 1rem;
+}
+
+.blog-title {
+  font-family: "Montserrat";
+  text-align: center;
+  padding-top: 40px;
+}
+
+.blog-content {
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 40px;
 }
 
 body {

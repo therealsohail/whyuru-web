@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Banner from "../Components/Banner";
+import { Banner } from "../Components/Banner";
 import { Link } from "react-router-dom";
 
 import bedtimeHero from "../Assets/bedtime.jpg";

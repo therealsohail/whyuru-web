@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { client } from "../client";
 import Carousel from "react-bootstrap/Carousel";
-import pic from "../Assets/wakeup.jpg";
 
 const Testimonials = () => {
   const [testimonials, setTestimonial] = useState([]);
@@ -18,10 +17,6 @@ const Testimonials = () => {
       });
   }, []);
 
-  const style = {
-    backgroundImage: "url(" + pic + ")",
-  };
-
   return (
     <div className="row">
       <Carousel className="carousel" controls={false} indicators={false}>
@@ -31,7 +26,7 @@ const Testimonials = () => {
               fields: { name, review, occupation },
             } = testimonial;
             return (
-              <Carousel.Item>
+              <Carousel.Item key={index}>
                 <p className="test-review">{review}</p>
                 <h3 className="test-name"> - {name}</h3>
                 <p className="test-occupation">{occupation}</p>
