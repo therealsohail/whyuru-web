@@ -3,6 +3,8 @@ import { BlogBanner } from "../Components/Banner";
 import { client } from "../client";
 import { useState } from "react";
 
+import Footer from "../Components/Footer";
+
 const BlogPost = (props) => {
   const [blog, setBlog] = useState([]);
 
@@ -60,6 +62,7 @@ const BlogPost = (props) => {
       ) : (
         <h1>Post Not Found</h1>
       )}
+      <Footer />
     </>
   );
 };

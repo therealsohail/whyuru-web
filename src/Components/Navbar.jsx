@@ -35,10 +35,16 @@ class Navbar extends Component {
                 </NavLink>
               </li>
               <li className="nav-item">
+                <NavLink to="/blogs" className="nav-link ">
+                  Blogs
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink to="/wakeup" className="nav-link ">
                   Wakeup
                 </NavLink>
               </li>
+
               <li className="nav-item">
                 <NavLink to="/bedtime" className="nav-link ">
                   Bedtime

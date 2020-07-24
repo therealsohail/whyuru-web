@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Banner } from "../Components/Banner";
 import { Link } from "react-router-dom";
 
+import Footer from "../Components/Footer";
 import bedtimeHero from "../Assets/bedtime.jpg";
 import { client } from "../client";
 import lang from "../Assets/lang.svg";
@@ -34,7 +35,6 @@ const Bedtime = () => {
         "fields.gender[match]": gender,
       })
       .then((res) => {
-        console.log(res);
         setVideo(res.items);
       });
   }, [activeLanguage, category, gender]);
@@ -47,7 +47,7 @@ const Bedtime = () => {
   const handleGenderChange = (e) => {
     setGender(e.target.value);
   };
-  console.log(activeLanguage);
+
   function goFullscreen(id) {
     var element = document.getElementById(id);
     if (element.mozRequestFullScreen) {
@@ -62,13 +62,13 @@ const Bedtime = () => {
       <Banner pic={bedtimeHero} heading="Bedtime" />
       <div className="container">
         <div className="language-section">
-          <img src={lang} width="40" height="32" alt="image" />
+          <img src={lang} width="40" height="32" alt="language-svg" />
           <select
             id="exampleFormControlSelect1"
             onChange={handleLanguageChange}
           >
-            {languages.map((language) => (
-              <option name="language" value={language}>
+            {languages.map((language, index) => (
+              <option name="language" value={language} key={index}>
                 {language}
               </option>
             ))}
@@ -120,12 +120,13 @@ const Bedtime = () => {
         </div>
         <div className="row video-gallery">
           {videos &&
-            videos.map((video) => {
+            videos.map((video, index) => {
               const name = video.fields.name;
               const videoUrl = video.fields.video.fields.file.url;
               const thumbnail = video.fields.videoThumbnail.fields.file.url;
               return (
                 <div
+                  key={index}
                   className="col-sm-4"
                   style={{ paddingTop: 80, clear: "both", cursor: "pointer" }}
                 >
@@ -154,6 +155,7 @@ const Bedtime = () => {
             })}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

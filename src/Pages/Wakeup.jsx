@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Banner } from "../Components/Banner";
 import { Link } from "react-router-dom";
 
+import Footer from "../Components/Footer";
 import wakeupHero from "../Assets/wakeup.jpg";
 import { client } from "../client";
 import lang from "../Assets/lang.svg";
@@ -36,7 +37,6 @@ const Wakeup = () => {
         "fields.gender[match]": gender,
       })
       .then((res) => {
-        console.log(res);
         setVideo(res.items);
       });
   }, [activeLanguage, category, gender]);
@@ -50,7 +50,7 @@ const Wakeup = () => {
   const handleGenderChange = (e) => {
     setGender(e.target.value);
   };
-  console.log(activeLanguage);
+
   function goFullscreen(id) {
     var element = document.getElementById(id);
     if (element.mozRequestFullScreen) {
@@ -65,13 +65,13 @@ const Wakeup = () => {
       <Banner pic={wakeupHero} heading="Wakeup" />
       <div className="container">
         <div className="language-section">
-          <img src={lang} width="40" height="32" />
+          <img src={lang} alt="language-svg" width="40" height="32" />
           <select
             id="exampleFormControlSelect1"
             onChange={handleLanguageChange}
           >
-            {languages.map((language) => (
-              <option name="language" value={language}>
+            {languages.map((language, index) => (
+              <option name="language" value={language} key={index}>
                 {language}
               </option>
             ))}
@@ -157,6 +157,7 @@ const Wakeup = () => {
             })}
         </div>
       </div>
+      <Footer />
     </>
   );
 };
