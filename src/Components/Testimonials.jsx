@@ -12,7 +12,6 @@ const Testimonials = () => {
         content_type: "testimonial",
       })
       .then((res) => {
-        console.log(res.items);
         setTestimonial(res.items);
       });
   }, []);

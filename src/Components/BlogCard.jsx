@@ -19,7 +19,7 @@ const BlogCard = (props) => {
     },
   } = props.post;
   return (
-    <Card style={{ width: "6rem", flex: 1 }} key={id}>
+    <Card style={{ width: "18rem", flex: 1, marginTop: 20 }} key={id}>
       <Card.Img variant="top" src={url} width="286" height="230" />
       <Card.Body>
         <Card.Title>{title}</Card.Title>

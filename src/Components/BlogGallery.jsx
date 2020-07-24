@@ -12,7 +12,6 @@ const BlogGallery = (props) => {
         content_type: "blog",
       })
       .then((res, index) => {
-        console.log(res.items);
         setBlogs(res.items);
       });
   }, []);
@@ -31,12 +30,16 @@ const BlogGallery = (props) => {
       </h3>
       <div className="row">
         {blogs &&
-          blogs.map((blog) => {
+          blogs.map((blog, index) => {
             const {
               sys: { id },
             } = blog;
 
-            return <BlogCard className="col-sm-4" key={id} post={blog} />;
+            return (
+              <div className="col-sm-4" key={index}>
+                <BlogCard key={id} post={blog} />
+              </div>
+            );
           })}
       </div>
       <br />

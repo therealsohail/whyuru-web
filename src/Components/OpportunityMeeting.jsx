@@ -12,11 +12,9 @@ class OpportunityMeeting extends Component {
         content_type: "opportunityMeetingPreparation",
       })
       .then((response) => {
-        console.log(response);
         this.setState({
           articles: response.items,
         });
-        console.log(this.state);
       });
   }
 
