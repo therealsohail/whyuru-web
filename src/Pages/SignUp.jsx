@@ -64,7 +64,9 @@ const SignUp = ({ history }) => {
   ) : null;
   const confirmPasswordAlert = error ? (
     <Alert variant="danger">{error.confirmpassword}</Alert>
-  ) : null;
+  ) : (
+    ""
+  );
 
   return (
     <div className="main row">
