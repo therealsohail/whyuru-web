@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import PrivateRoute from "../PrivateRoute";
+
 import Home from "../Pages/Home";
 import BigFive from "../Pages/BigFive";
 import TheMind from "../Pages/TheMind";
@@ -15,33 +17,41 @@ import Beta from "../Pages/Beta";
 import Gamma from "../Pages/Gamma";
 import Symphony from "../Pages/Symphony";
 import Flow from "../Pages/Flow";
+import { AuthProvider } from "../Context/AuthContext";
+import SignUp from "../Pages/SignUp";
+import Login from "../Pages/Login";
 
 class Routes extends Component {
   state = {};
   render() {
     return (
       <div>
-        <BrowserRouter>
-          <Navbar />
-          <div>
-            <Switch>
-              <Route path="/" component={Home} exact />
-              <Route path="/bedtime" component={Bedtime} />
-              <Route path="/wakeup" component={Wakeup} />
-              <Route path="/alpha" component={Alpha} />
-              <Route path="/delta" component={Delta} />
-              <Route path="/theta" component={Theta} />
-              <Route path="/beta" component={Beta} />
-              <Route path="/gamma" component={Gamma} />
-              <Route path="/symphony" component={Symphony} />
-              <Route path="/flow" component={Flow} />
-              <Route path="/BigFive" component={BigFive} />
-              <Route path="/TheMind" component={TheMind} />
-              <Route path="/blog/:id" component={BlogPost} />
-              <Route path="/blogs" component={Blogs} />
-            </Switch>
-          </div>
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter>
+            <Route path="/signup" component={SignUp} />
+            <Route path="/login" component={Login} />
+
+            <Navbar />
+            <div>
+              <Switch>
+                <Route path="/" component={Home} exact />
+                <Route path="/bedtime" component={Bedtime} />
+                <Route path="/wakeup" component={Wakeup} />
+                <Route path="/alpha" component={Alpha} />
+                <Route path="/delta" component={Delta} />
+                <Route path="/theta" component={Theta} />
+                <Route path="/beta" component={Beta} />
+                <Route path="/gamma" component={Gamma} />
+                <Route path="/symphony" component={Symphony} />
+                <Route path="/flow" component={Flow} />
+                <Route path="/BigFive" component={BigFive} />
+                <Route path="/TheMind" component={TheMind} />
+                <Route path="/blog/:id" component={BlogPost} />
+                <Route path="/blogs" component={Blogs} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </AuthProvider>
       </div>
     );
   }

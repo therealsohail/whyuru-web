@@ -74,6 +74,43 @@ class Navbar extends Component {
                   </Link>
                 </div>
               </li>
+
+              <li className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  The Mind
+                </Link>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <Link to="/consciousness" className="dropdown-item">
+                    Consciousness
+                  </Link>
+                  <Link to="/thebrain" className="dropdown-item">
+                    The Brain
+                  </Link>
+                  <Link to="/limbicsystem" className="dropdown-item">
+                    Limbic System
+                  </Link>
+                  <Link to="/cortex" className="dropdown-item">
+                    Cortex
+                  </Link>
+                  <Link to="/cerebellum" className="dropdown-item">
+                    Cerebellum
+                  </Link>
+                  <Link to="/unconscious" className="dropdown-item">
+                    Unconscious
+                  </Link>
+                  <Link to="/emotions" className="dropdown-item">
+                    Emotions
+                  </Link>
+                </div>
+              </li>
+
               <li className="nav-item">
                 <NavLink to="/wakeup" className="nav-link ">
                   Wakeup
