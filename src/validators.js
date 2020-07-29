@@ -20,9 +20,7 @@ export const signupValidator = (data) => {
   if (isEmpty(data.password)) {
     errors.password = "Must not be empty";
   }
-  if (data.password !== data.confirmPassword) {
-    errors.confirmPassword = "Passwords must be matched";
-  }
+
   if (isEmpty(data.fname)) {
     errors.fname = "Must not be empty";
   }

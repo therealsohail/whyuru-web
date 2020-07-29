@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, InputGroup } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 
 import { app, db } from "../firebaseConfig";
@@ -13,7 +13,11 @@ const SignUp = ({ history }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [validate, setValidate] = useState(false);
+
   const [error, setError] = useState({});
+
+  console.log(error);
 
   const credientials = {
     fname,
@@ -47,26 +51,32 @@ const SignUp = ({ history }) => {
       setError({ ...errors });
       console.log(error);
     }
+    setValidate(true);
   };
 
-  const emailAlert = error ? (
-    <Alert variant="danger">{error.email}</Alert>
+  const emailAlert = error.email ? (
+    <Form.Control.Feedback type="invalid">{error.email}</Form.Control.Feedback>
   ) : null;
-  const fnameAlert =
-    error.fname === "Must not be empty" ? (
-      <Alert variant="danger">{error.fname}</Alert>
-    ) : null;
+  const fnameAlert = error.fname ? (
+    <Form.Control.Feedback type="invalid">{error.fname}</Form.Control.Feedback>
+  ) : null;
   const lnameAlert = error ? (
-    <Alert variant="danger">{error.lname}</Alert>
+    <Form.Control.Feedback type="invalid">{error.lname}</Form.Control.Feedback>
   ) : null;
   const passwordAlert = error ? (
-    <Alert variant="danger">{error.password}</Alert>
+    <Form.Control.Feedback type="invalid">
+      {error.password}
+    </Form.Control.Feedback>
   ) : null;
-  const confirmPasswordAlert = error ? (
-    <Alert variant="danger">{error.confirmpassword}</Alert>
-  ) : (
-    ""
-  );
+
+  function showPassword() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
 
   return (
     <div className="main row">
@@ -74,60 +84,67 @@ const SignUp = ({ history }) => {
         <div className="signup-heading">
           <h1>SignUp</h1>
           <hr className="deco-line" />
-          {emailAlert}
-          {fnameAlert}
-          {lnameAlert}
-          {passwordAlert}
-          {confirmPasswordAlert}
         </div>
         <div className="form-box">
-          <Form onSubmit={handleSubmit}>
+          <Form noValidate validated={validate} onSubmit={handleSubmit}>
             <Form.Group controlId="formGroupFname">
               <Form.Label>First Name</Form.Label>
               <Form.Control
+                required
                 bsStyle={error.fname ? "danger" : null}
                 type="text"
                 placeholder="First Name"
                 value={fname}
                 onChange={(e) => setFname(e.target.value)}
               />
+              {fnameAlert}
             </Form.Group>
             <Form.Group controlId="formGroupLname">
               <Form.Label>Last Name</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Last Name"
                 value={lname}
                 onChange={(e) => setLname(e.target.value)}
               />
+              {lnameAlert}
             </Form.Group>
             <Form.Group controlId="formGroupEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
+                required
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              {emailAlert}
             </Form.Group>
             <Form.Group controlId="formGroupPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <InputGroup>
+                <Form.Control
+                  id="password"
+                  required
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <InputGroup.Append>
+                  <Button
+                    variant="outline-secondary"
+                    id="showButton"
+                    onClick={showPassword}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </Button>
+                </InputGroup.Append>
+                {passwordAlert}
+              </InputGroup>
             </Form.Group>
-            <Form.Group controlId="formGroupPassword">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </Form.Group>
+
             <Button variant="outline-primary" type="submit">
               Submit
             </Button>
