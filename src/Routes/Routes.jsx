@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 
 import Home from "../Pages/Home";
@@ -21,22 +21,18 @@ import { AuthProvider } from "../Context/AuthContext";
 import SignUp from "../Pages/SignUp";
 import Login from "../Pages/Login";
 
-class Routes extends Component {
-  state = {};
-  render() {
-    return (
-      <div>
-        <AuthProvider>
-          <BrowserRouter>
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={Login} />
-
-            <Navbar />
-            <div>
-              <Switch>
+const Main = withRouter(({location}) => {
+  
+  console.log(location);
+  return (
+  <div>
+     {location.pathname !== "/login" && location.pathname !== "/signup" && <Navbar /> }
+    <Switch>
                 <Route path="/" component={Home} exact />
-                <Route path="/bedtime" component={Bedtime} />
-                <Route path="/wakeup" component={Wakeup} />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/login" component={Login} />
+                <PrivateRoute path="/bedtime" component={Bedtime} />
+                <PrivateRoute path="/wakeup" component={Wakeup} />
                 <Route path="/alpha" component={Alpha} />
                 <Route path="/delta" component={Delta} />
                 <Route path="/theta" component={Theta} />
@@ -49,12 +45,22 @@ class Routes extends Component {
                 <Route path="/blog/:id" component={BlogPost} />
                 <Route path="/blogs" component={Blogs} />
               </Switch>
-            </div>
+
+  </div>
+  )
+})
+
+const Routes = ({location}) => {
+    return (
+        <AuthProvider>
+          <BrowserRouter>
+            
+            <Main />            
+              
           </BrowserRouter>
         </AuthProvider>
-      </div>
     );
-  }
+  
 }
 
 export default Routes;

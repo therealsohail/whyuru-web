@@ -1,25 +1,124 @@
-import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Form, Button, InputGroup } from "react-bootstrap";
+import { Link, withRouter, Redirect } from "react-router-dom";
 
-const Login = () => {
+import { app } from "../firebaseConfig";
+import { validateLogin } from "../validators";
+import { AuthContext } from "../Context/AuthContext";
+import {Alert} from "react-bootstrap"
+
+const Login = (props) => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [validate, setValidate] = useState(false)
+  const [error, setError] = useState({})
+  const [fbError, setFbError] = useState("")
+
+  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { errors, valid } = validateLogin(email, password);
+
+    if (valid) {
+      app
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          props.history.push("/");
+        })
+        .catch((err) => {
+          console.error(err);
+          var errorCode = err.code;
+      var errorMessage = err.message;
+
+      if(errorCode === 'auth/wrong-password') {
+        setFbError("Wrong email or password")
+      }
+        });
+    } else if (!valid) {
+      setError({ ...errors });
+      
+    }
+    setValidate(true)
+  };
+
+  const { currentUser } = useContext(AuthContext);
+
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
+
+  const wrongCred = (fbError === "Wrong email or password") ? (<Alert className="form-box" style={{padding: 10}} variant="danger">Invalid Email or password</Alert>) : null
+
+  function showPassword() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
+  const emailAlert = error.email ? (
+    <Form.Control.Feedback type="invalid">{error.email}</Form.Control.Feedback>
+  ) : null;
+
+  const passwordAlert = error ? (
+    <Form.Control.Feedback type="invalid">
+      {error.password}
+    </Form.Control.Feedback>
+  ) : null;
+
   return (
     <div className="main row">
       <div className="signup col-sm-8">
         <div className="signup-heading">
           <h1>Login</h1>
           <hr className="deco-line" />
+          {wrongCred}
+          
         </div>
         <div className="form-box">
-          <Form>
+          <Form noValidate onSubmit={handleSubmit} validated={validate}>
             <Form.Group controlId="formGroupEmail">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Email" />
+              <Form.Control
+                required
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {emailAlert}
             </Form.Group>
             <Form.Group controlId="formGroupPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <InputGroup>
+              <Form.Control
+                required
+                id="password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputGroup.Append>
+                  <Button
+                    variant="outline-secondary"
+                    id="showButton"
+                    onClick={showPassword}
+                  >
+                    <i className="fas fa-eye"></i>
+                  </Button>
+                </InputGroup.Append>
+                {passwordAlert}
+              </InputGroup >
+              
             </Form.Group>
+            
             <Button variant="outline-primary" type="submit">
               Login
             </Button>
@@ -38,4 +137,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

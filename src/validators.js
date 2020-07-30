@@ -33,3 +33,19 @@ export const signupValidator = (data) => {
     valid: Object.keys(errors).length === 0 ? true : false,
   };
 };
+
+export const validateLogin = (email, password) => {
+  const errors = {};
+  if (isEmpty(email)) {
+    errors.email = "Must not be empty";
+  } else if (!isEmail(email)) {
+    errors.email = "Must be valid email address";
+  }
+  if (password === "") {
+    errors.password = "Password must not be empty";
+  }
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};

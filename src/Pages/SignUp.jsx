@@ -49,7 +49,6 @@ const SignUp = ({ history }) => {
         });
     } else if (!valid) {
       setError({ ...errors });
-      console.log(error);
     }
     setValidate(true);
   };
@@ -163,4 +162,4 @@ const SignUp = ({ history }) => {
   );
 };
 
-export default SignUp;
+export default withRouter(SignUp);
