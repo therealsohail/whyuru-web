@@ -9,11 +9,29 @@ const Navbar = () => {
   
   const { currentUser } = useContext(AuthContext);
   const signOut = currentUser ? (
-    <Button variant="primary" onClick={() => app.auth().signOut()}>
-      Sign Out
-    </Button>
+    <ul className="nav navbar-nav ml-auto w-100 justify-content-end">
+      <li className="nav-item">
+      <Link className="nav-link " onClick={() => app.auth().signOut()}>
+                Signout
+              </Link>
+            </li>
+            
+            
+    </ul>
   ) : (
-    null
+    <ul className="nav navbar-nav ml-auto w-100 justify-content-end">
+      <li className="nav-item">
+      <Link to="/login" className="nav-link ">
+                Login
+              </Link>
+            </li>
+            <li className="nav-item">
+            <Link to="/signup" className="nav-link ">
+                Signup
+              </Link>
+            </li>
+            
+    </ul>
   );
   return (
     <header id="header" className="header">
@@ -37,7 +55,7 @@ const Navbar = () => {
         </button>
 
         <div id="navbarSupportedContent" className="collapse navbar-collapse">
-          <ul className="navbar-nav mx-auto">
+          <ul className="navbar-nav w-100 justify-content-center">
             <li className="nav-item">
               <NavLink exact to="/" className="nav-link ">
                 Home <span className="sr-only">(current)</span>
@@ -131,8 +149,9 @@ const Navbar = () => {
                 Bedtime
               </NavLink>
             </li>
-            <li className="nav-item">{signOut}</li>
+            
           </ul>
+          {signOut}
         </div>
       </nav>
     </header>
