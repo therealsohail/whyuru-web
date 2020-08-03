@@ -10,6 +10,8 @@
 
 @import "./Signup";
 
+@import "./Sidebar";
+
 body {
   box-sizing: border-box;
 }
@@ -55,4 +57,13 @@ body {
     width: 100%;
     margin: auto;
   }
+}
+.scrolling-wrapper {
+  overflow-x: auto;
+}
+
+.add-button {
+  position: relative;
+  left: 50vw;
+  bottom: 8vh;
 }

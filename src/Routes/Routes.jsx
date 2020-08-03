@@ -20,47 +20,45 @@ import Flow from "../Pages/Flow";
 import { AuthProvider } from "../Context/AuthContext";
 import SignUp from "../Pages/SignUp";
 import Login from "../Pages/Login";
+import Scheduler from "../Pages/Scheduler";
 
-const Main = withRouter(({location}) => {
-  
-  console.log(location);
+const Main = withRouter(({ location }) => {
   return (
-  <div>
-     {location.pathname !== "/login" && location.pathname !== "/signup" && <Navbar /> }
-    <Switch>
-                <Route path="/" component={Home} exact />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/login" component={Login} />
-                <PrivateRoute path="/bedtime" component={Bedtime} />
-                <PrivateRoute path="/wakeup" component={Wakeup} />
-                <Route path="/alpha" component={Alpha} />
-                <Route path="/delta" component={Delta} />
-                <Route path="/theta" component={Theta} />
-                <Route path="/beta" component={Beta} />
-                <Route path="/gamma" component={Gamma} />
-                <Route path="/symphony" component={Symphony} />
-                <Route path="/flow" component={Flow} />
-                <Route path="/BigFive" component={BigFive} />
-                <Route path="/TheMind" component={TheMind} />
-                <Route path="/blog/:id" component={BlogPost} />
-                <Route path="/blogs" component={Blogs} />
-              </Switch>
+    <div>
+      {location.pathname !== "/login" && location.pathname !== "/signup" && (
+        <Navbar />
+      )}
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/login" component={Login} />
+        <PrivateRoute path="/bedtime" component={Bedtime} />
+        <PrivateRoute path="/wakeup" component={Wakeup} />
+        <Route path="/alpha" component={Alpha} />
+        <Route path="/delta" component={Delta} />
+        <Route path="/theta" component={Theta} />
+        <Route path="/beta" component={Beta} />
+        <Route path="/gamma" component={Gamma} />
+        <Route path="/symphony" component={Symphony} />
+        <Route path="/flow" component={Flow} />
+        <Route path="/BigFive" component={BigFive} />
+        <Route path="/TheMind" component={TheMind} />
+        <Route path="/blog/:id" component={BlogPost} />
+        <Route path="/blogs" component={Blogs} />
+        <Route path="/scheduler" component={Scheduler} />
+      </Switch>
+    </div>
+  );
+});
 
-  </div>
-  )
-})
-
-const Routes = ({location}) => {
-    return (
-        <AuthProvider>
-          <BrowserRouter>
-            
-            <Main />            
-              
-          </BrowserRouter>
-        </AuthProvider>
-    );
-  
-}
+const Routes = ({ location }) => {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Main />
+      </BrowserRouter>
+    </AuthProvider>
+  );
+};
 
 export default Routes;
