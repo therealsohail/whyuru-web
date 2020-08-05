@@ -3,12 +3,13 @@
   padding-left: 20px;
   background-color: #ebebeb;
   color: white;
-  width: 400px;
+  width: 420px;
   position: fixed;
   z-index: 1500;
   margin-left: 70vw;
   right: -100%;
   animation: slide-open 1s forwards;
+  overflow-y: auto;
 }
 
 .sidebar.close {
