@@ -4,6 +4,7 @@ import InputMoment from "input-moment";
 import "input-moment/dist/input-moment.css";
 import { Nav, Image } from "react-bootstrap";
 import { client } from "../client";
+import $ from "jquery";
 
 class Time extends React.Component {
   state = {
@@ -15,6 +16,7 @@ class Time extends React.Component {
     videos: [],
     selected: false,
     selectedArray: [],
+    data: [],
   };
 
   toggleClass = (index) => {
@@ -48,6 +50,14 @@ class Time extends React.Component {
   };
 
   componentDidMount() {
+    $("#checkbox").click(function () {
+      console.log("Hello");
+      if ($("#checkbox").parent().hasClass("selected")) {
+        $("#checkbox").parent().removeClass("selected");
+      } else {
+        $("#checkbox").parent().addClass("selected");
+      }
+    });
     client
       .getEntries({
         content_type: this.state.type,
@@ -86,15 +96,27 @@ class Time extends React.Component {
     }
   }
 
-  setActive = (video) => {
-    if (!video.isActive) {
-      video.isActive = true;
-      video.border = "4px solid #09e823";
-    } else {
-      video.isActive = false;
-      video.border = "2px solid  #b5b5b5";
-    }
-  };
+  // handleClick = (vid) => {
+  //   if (this.state.video.isActive === false) {
+  //     this.setState({
+  //       video: {
+  //         isActive: true,
+  //         border: "4px solid #09e823",
+  //         vid,
+  //       },
+  //     });
+  //   } else {
+  //     if (vid.sys.id === this.state.video.vid.sys.id) {
+  //       this.setState({
+  //         video: {
+  //           isActive: false,
+  //           border: "2px solid #b5b5b5",
+  //           vid: "",
+  //         },
+  //       });
+  //     }
+  //   }
+  // };
 
   languages = [
     "English",
@@ -114,8 +136,31 @@ class Time extends React.Component {
     "Neuroticism",
   ];
 
+  removeData = (e, id) => {
+    var array = [...this.state.data];
+    var index = array.indexOf(id);
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ data: array });
+    }
+  };
+
+  handleCheckbox = (e, id, video, index) => {
+    if (e.target.checked) {
+      if (video.sys.id === id) {
+        this.setState({
+          data: [...this.state.data, { ...video }],
+        });
+      }
+    } else if (!e.target.checked) {
+      this.setState({
+        data: this.state.data.filter((item) => item.sys.id !== e.target.name),
+      });
+    }
+  };
+
   render() {
-    console.log(this.state);
+    console.log(this.state.data);
     return (
       <div>
         <center>
@@ -196,21 +241,22 @@ class Time extends React.Component {
             const id = video.sys.id;
             const videoTitle = video.fields.name;
             const videoThumbnail = video.fields.videoThumbnail.fields.file.url;
-            video.isActive = true;
-            video.border = "2px solid #b5b5b5";
-            console.log(video);
             return (
               <div
-                onClick={() => this.setActive(video)}
+                // onClick={() => this.handleClick(video)}
                 className="video-card"
                 id="video-card"
                 key={id}
-                style={
-                  video.isActive
-                    ? { border: "4px solid #09e823" }
-                    : { border: "2px solid  #b5b5b5" }
-                }
               >
+                <input
+                  type="checkbox"
+                  name={id}
+                  id="_checkbox"
+                  onClick={(e) => this.handleCheckbox(e, id, video, i)}
+                />
+                <label for="_checkbox">
+                  <div id="tick_mark"></div>
+                </label>
                 <Image
                   className="thumbnail"
                   src={videoThumbnail}

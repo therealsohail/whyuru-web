@@ -93,7 +93,7 @@ body {
 
   .video-card {
     padding-top: 17px;
-    //transition: border 2s;
+    transition: border 2s;
     cursor: pointer;
     .thumbnail {
       margin-top: 8px;
@@ -101,12 +101,8 @@ body {
       margin-right: 30px;
     }
   }
-  // .video-card:hover {
-  //   border: 2px solid #b5b5b5;
-  //   border-radius: 5px;
-  // }
 }
-.video-card-selected {
+.selected {
   border-radius: 5px;
   padding-top: 17px;
   animation: borderChange 0.5s forwards;
@@ -118,11 +114,17 @@ body {
   }
 }
 
-// @keyframes borderChange {
-//   from {
-//     border: 2px solid #b5b5bb;
-//   }
-//   to {
-//     border: 4px solid #09e823;
-//   }
-// }
+@keyframes borderChange {
+  from {
+    border: 2px solid #b5b5bb;
+  }
+  to {
+    border: 4px solid #09e823;
+  }
+}
+
+input[type="checkbox"] {
+  position: relative;
+  top: 2.3em;
+  left: 2.3em;
+}
