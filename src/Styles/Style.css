@@ -380,20 +380,6 @@ body {
   margin-right: 30px;
 }
 
-.selected {
-  border-radius: 5px;
-  padding-top: 17px;
-  -webkit-animation: borderChange 0.5s forwards;
-          animation: borderChange 0.5s forwards;
-  cursor: pointer;
-}
-
-.selected .thumbnail {
-  margin-top: 8px;
-  margin-left: 30px;
-  margin-right: 30px;
-}
-
 @-webkit-keyframes borderChange {
   from {
     border: 2px solid #b5b5bb;
@@ -416,4 +402,25 @@ input[type="checkbox"] {
   position: relative;
   top: 2.3em;
   left: 2.3em;
+}
+
+.front img {
+  margin-left: 30px;
+}
+
+.back {
+  width: 180px;
+  height: 114px;
+  background-color: #2ecc71;
+}
+
+.back img {
+  width: 100px;
+  height: 100px;
+  margin-left: 40px;
+}
+
+.save-button {
+  position: absolute;
+  right: 5px;
 }
