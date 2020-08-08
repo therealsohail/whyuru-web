@@ -5,14 +5,14 @@ import InputMoment from "input-moment";
 import "input-moment/dist/input-moment.css";
 import Time from "./Time";
 
-const Sidebar = (props) => {
-  const [sidebarClass, setSidebarClass] = useState(props.sidebar);
+const Sidebar = ({ sidebar, close }) => {
+  const [sidebarClass, setSidebarClass] = useState(sidebar);
 
   const closeHandler = (e) => {
     e.preventDefault();
     setSidebarClass("sidebar close");
     setTimeout(() => {
-      props.close();
+      close();
     }, 1000);
   };
   return (
@@ -21,7 +21,11 @@ const Sidebar = (props) => {
         <i class="fas fa-times" style={{ color: "#000" }}></i>
       </button>
 
-      <Time />
+      <Time
+        sidebarClass={sidebar}
+        closeFunc={close}
+        closeHandler={closeHandler}
+      />
     </div>
   );
 };

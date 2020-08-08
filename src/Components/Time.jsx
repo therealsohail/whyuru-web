@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import InputMoment from "input-moment";
 import "input-moment/dist/input-moment.css";
-import { Nav, Image, Button } from "react-bootstrap";
+import { Nav, Image, Button, Modal } from "react-bootstrap";
 import { client } from "../client";
 import ReactCardFlip from "react-card-flip";
 import check from "../Assets/check.svg";
@@ -22,6 +22,9 @@ class Time extends React.Component {
     time: "",
     date: "",
     isSelected: [],
+    count: 0,
+    showModal: false,
+    modalId: null,
   };
 
   handleChange = (m) => {
@@ -50,6 +53,12 @@ class Time extends React.Component {
         });
         console.log(this.state.videos);
       });
+    this.state.videos.map((vid, i) => {
+      const vidId = vid.sys.id;
+      this.setState({
+        count: [{ countId: vidId, countNum: 1 }],
+      });
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -72,30 +81,14 @@ class Time extends React.Component {
           });
           console.log(this.state.videos);
         });
+      this.state.videos.map((vid, i) => {
+        const vidId = vid.sys.id;
+        this.setState({
+          count: [{ countId: vidId, countNum: 1 }],
+        });
+      });
     }
   }
-
-  // handleClick = (vid) => {
-  //   if (this.state.video.isActive === false) {
-  //     this.setState({
-  //       video: {
-  //         isActive: true,
-  //         border: "4px solid #09e823",
-  //         vid,
-  //       },
-  //     });
-  //   } else {
-  //     if (vid.sys.id === this.state.video.vid.sys.id) {
-  //       this.setState({
-  //         video: {
-  //           isActive: false,
-  //           border: "2px solid #b5b5b5",
-  //           vid: "",
-  //         },
-  //       });
-  //     }
-  //   }
-  // };
 
   languages = [
     "English",
@@ -115,6 +108,13 @@ class Time extends React.Component {
     "Neuroticism",
   ];
 
+  isFlipped = (id) => {
+    if (this.state.isSelected.includes(id)) {
+      return true;
+    } else if (!this.state.isSelected.includes(id) && !this.state.showModal) {
+      return false;
+    }
+  };
   handleCheckbox = (e, id, video, index) => {
     if (e.target.checked) {
       if (e.target.name === id) {
@@ -123,6 +123,9 @@ class Time extends React.Component {
 
       if (video.sys.id === id) {
         this.setState({
+          modalId: id,
+          // count: [...this.state.count, { countId: video.sys.id, countNum: 1 }],
+          count: this.state.count + 1,
           data: [
             ...this.state.data,
             {
@@ -140,14 +143,56 @@ class Time extends React.Component {
           (num) => num !== e.target.name
         ),
       });
-      this.setState({
+      this.setState((prevState) => ({
+        count: prevState.count,
         data: this.state.data.filter((item) => item.id !== e.target.name),
+      }));
+    }
+  };
+
+  closeModal = (id) => {
+    this.setState({
+      showModal: false,
+      modalId: null,
+      count: 0,
+      isSelected: this.state.isSelected.filter((num) => num !== id),
+      data: this.state.data.filter((item) => item.id !== this.state.modalId),
+    });
+  };
+
+  incrementData = (video, id) => {
+    this.setState(
+      {
+        count: this.state.count + 1,
+        data: [
+          ...this.state.data,
+          {
+            id: video.sys.id,
+            title: video.fields.name,
+            thumbnail: video.fields.videoThumbnail.fields.file.url,
+            video: video.fields.video.fields.file.url,
+          },
+        ],
+      },
+      () => console.log(this.state.data)
+    );
+  };
+
+  decrementData = (video, id) => {
+    if (this.state.count >= 0) {
+      this.setState({
+        count: this.state.count - 1,
+      });
+      let tempData = this.state.data;
+      tempData.pop();
+      this.setState({
+        data: tempData,
       });
     }
   };
 
   render() {
-    console.log(this.state.isSelected);
+    console.log(this.state.data, this.state.isSelected);
     return (
       <>
         <Button
@@ -244,40 +289,111 @@ class Time extends React.Component {
               const videoTitle = video.fields.name;
               const videoThumbnail =
                 video.fields.videoThumbnail.fields.file.url;
+
               return (
-                <label for={id}>
-                  <input
-                    type="checkbox"
-                    name={id}
-                    id={id}
-                    onClick={(e) => this.handleCheckbox(e, id, video, i)}
-                  />
-                  <ReactCardFlip
-                    isFlipped={
-                      this.state.isSelected.includes(id) ? true : false
+                <>
+                  <label for={id}>
+                    <input
+                      className="flip-check"
+                      type="checkbox"
+                      name={id}
+                      id={id}
+                      onClick={(e) => this.handleCheckbox(e, id, video, i)}
+                      disabled={
+                        this.state.isSelected.includes(id) ? true : false
+                      }
+                    />
+                    <ReactCardFlip
+                      isFlipped={() => this.isFlipped(id)}
+                      flipDirection="horizontal"
+                      className="video-card"
+                      id="video-card"
+                      key={id}
+                    >
+                      <div className="front">
+                        <Image
+                          className="thumbnail"
+                          src={videoThumbnail}
+                          width="120"
+                          height="90"
+                          rounded
+                        />
+                        <p style={{ color: " #000", textAlign: "center" }}>
+                          {videoTitle}
+                        </p>
+                      </div>
+                      <div className="back" onClick={this.handleFlip}>
+                        <img src={check} alt="check" />
+                      </div>
+                    </ReactCardFlip>
+                  </label>
+                  <Modal
+                    style={{ zIndex: 5000 }}
+                    show={this.state.modalId === id ? true : false}
+                    onHide={() =>
+                      this.setState({ showModal: false, modalId: null })
                     }
-                    flipDirection="horizontal"
-                    className="video-card"
-                    id="video-card"
-                    key={id}
                   >
-                    <div className="front">
-                      <Image
-                        className="thumbnail"
-                        src={videoThumbnail}
-                        width="120"
-                        height="90"
-                        rounded
-                      />
-                      <p style={{ color: " #000", textAlign: "center" }}>
-                        {videoTitle}
-                      </p>
-                    </div>
-                    <div className="back" onClick={this.handleFlip}>
-                      <img src={check} alt="check" />
-                    </div>
-                  </ReactCardFlip>
-                </label>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Counter</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className="modal-video-card">
+                        <Image
+                          className="thumbnail"
+                          src={videoThumbnail}
+                          width="120"
+                          height="90"
+                          rounded
+                        />
+                        <p style={{ color: " #000" }}>{videoTitle}</p>
+                      </div>
+                      <div className="modal-counter">
+                        <span
+                          className="minus bg-dark"
+                          onClick={() => this.decrementData(video, id)}
+                        >
+                          -
+                        </span>
+                        <input
+                          type="number"
+                          className="count"
+                          name="qty"
+                          value={this.state.count}
+                        />
+                        <span
+                          className="plus bg-dark"
+                          onClick={() => this.incrementData(video, id)}
+                        >
+                          +
+                        </span>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <label for={id}>
+                        <Button
+                          variant="secondary"
+                          onClick={() => this.closeModal(id)}
+                        >
+                          Close
+                        </Button>
+
+                        <Button
+                          variant="primary"
+                          onClick={() =>
+                            this.setState({
+                              showModal: false,
+                              modalId: null,
+                              count: 0,
+                            })
+                          }
+                        >
+                          Save Changes
+                        </Button>
+                      </label>
+                    </Modal.Footer>
+                  </Modal>
+                </>
               );
             })}
           </div>
