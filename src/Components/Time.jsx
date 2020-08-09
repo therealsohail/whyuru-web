@@ -190,9 +190,13 @@ class Time extends React.Component {
       });
     }
   };
+  clearData = () => {
+    this.setState({
+      data: [],
+    });
+  };
 
   render() {
-    console.log(this.state.data, this.state.isSelected);
     return (
       <>
         <Button

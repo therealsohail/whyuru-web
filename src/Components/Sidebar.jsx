@@ -1,33 +1,37 @@
 import React from "react";
-import { useState } from "react";
-import moment from "moment";
-import InputMoment from "input-moment";
 import "input-moment/dist/input-moment.css";
 import Time from "./Time";
 
-const Sidebar = ({ sidebar, close }) => {
-  const [sidebarClass, setSidebarClass] = useState(sidebar);
+class Sidebar extends React.Component {
+  state = {
+    sidebarClass: this.props.sidebar,
+  };
 
-  const closeHandler = (e) => {
+  closeHandler = (e) => {
     e.preventDefault();
-    setSidebarClass("sidebar close");
+    this.setState({
+      sidebarClass: "sidebar close",
+    });
+    this.refs.time.clearData();
     setTimeout(() => {
-      close();
+      this.props.close();
     }, 1000);
   };
-  return (
-    <div className={sidebarClass}>
-      <button id="close" onClick={closeHandler}>
-        <i class="fas fa-times" style={{ color: "#000" }}></i>
-      </button>
+  render() {
+    return (
+      <div className={this.state.sidebarClass}>
+        <button id="close" onClick={this.closeHandler}>
+          <i className="fas fa-times" style={{ color: "#000" }}></i>
+        </button>
 
-      <Time
-        sidebarClass={sidebar}
-        closeFunc={close}
-        closeHandler={closeHandler}
-      />
-    </div>
-  );
-};
+        <Time
+          ref="time"
+          sidebarClass={this.state.sidebarClass}
+          closeHandler={this.closeHandler}
+        />
+      </div>
+    );
+  }
+}
 
 export default Sidebar;
