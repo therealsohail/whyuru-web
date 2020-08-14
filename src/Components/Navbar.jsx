@@ -6,31 +6,27 @@ import { AuthContext } from "../Context/AuthContext";
 import { app } from "../firebaseConfig";
 
 const Navbar = () => {
-  
   const { currentUser } = useContext(AuthContext);
   const signOut = currentUser ? (
     <ul className="nav navbar-nav ml-auto w-100 justify-content-end">
       <li className="nav-item">
-      <Link className="nav-link " onClick={() => app.auth().signOut()}>
-                Signout
-              </Link>
-            </li>
-            
-            
+        <Link className="nav-link " onClick={() => app.auth().signOut()}>
+          Signout
+        </Link>
+      </li>
     </ul>
   ) : (
     <ul className="nav navbar-nav ml-auto w-100 justify-content-end">
       <li className="nav-item">
-      <Link to="/login" className="nav-link ">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-            <Link to="/signup" className="nav-link ">
-                Signup
-              </Link>
-            </li>
-            
+        <Link to="/login" className="nav-link ">
+          Login
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/signup" className="nav-link ">
+          Signup
+        </Link>
+      </li>
     </ul>
   );
   return (
@@ -149,7 +145,16 @@ const Navbar = () => {
                 Bedtime
               </NavLink>
             </li>
-            
+            <li className="nav-item">
+              <NavLink to="/journals" className="nav-link ">
+                Journals
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/scheduler" className="nav-link ">
+                Scheduler
+              </NavLink>
+            </li>
           </ul>
           {signOut}
         </div>

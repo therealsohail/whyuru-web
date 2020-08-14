@@ -15,6 +15,7 @@ class Time extends React.Component {
     activeCategory: "Openess",
     activeGender: "Male",
     videos: [],
+    affirmationVideos: [],
     selected: false,
     selectedArray: [],
     data: [],
@@ -53,12 +54,17 @@ class Time extends React.Component {
         });
         console.log(this.state.videos);
       });
-    this.state.videos.map((vid, i) => {
-      const vidId = vid.sys.id;
-      this.setState({
-        count: [{ countId: vidId, countNum: 1 }],
+
+    client
+      .getEntries({
+        content_type: "affirmation",
+        "fields.language[match]": this.state.activeLanguage,
+      })
+      .then((res) => {
+        this.setState({
+          affirmationVideos: res.items,
+        });
       });
-    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -81,12 +87,17 @@ class Time extends React.Component {
           });
           console.log(this.state.videos);
         });
-      this.state.videos.map((vid, i) => {
-        const vidId = vid.sys.id;
-        this.setState({
-          count: [{ countId: vidId, countNum: 1 }],
+
+      client
+        .getEntries({
+          content_type: "affirmation",
+          "fields.language[match]": this.state.activeLanguage,
+        })
+        .then((res) => {
+          this.setState({
+            affirmationVideos: res.items,
+          });
         });
-      });
     }
   }
 
@@ -197,6 +208,129 @@ class Time extends React.Component {
   };
 
   render() {
+    console.log(this.state);
+    let affirmation;
+    if (this.state.type === "wakeup") {
+      affirmation = (
+        <div className="affirmation">
+          <h5 style={{ color: "#000" }}>Affirmation</h5>
+          <div className="videos-container">
+            {this.state.affirmationVideos.map((video, i) => {
+              const id = video.sys.id;
+              const videoTitle = video.fields.title;
+              const videoThumbnail =
+                video.fields.videoThumbnail.fields.file.url;
+
+              return (
+                <>
+                  <label for={id}>
+                    <input
+                      className="flip-check"
+                      type="checkbox"
+                      name={id}
+                      id={id}
+                      onClick={(e) => this.handleCheckbox(e, id, video, i)}
+                      disabled={
+                        this.state.isSelected.includes(id) ? true : false
+                      }
+                    />
+                    <ReactCardFlip
+                      isFlipped={() => this.isFlipped(id)}
+                      flipDirection="horizontal"
+                      className="video-card"
+                      id="video-card"
+                      key={id}
+                    >
+                      <div className="front">
+                        <Image
+                          className="thumbnail"
+                          src={videoThumbnail}
+                          width="120"
+                          height="90"
+                          rounded
+                        />
+                        <p style={{ color: " #000", textAlign: "center" }}>
+                          {videoTitle}
+                        </p>
+                      </div>
+                      <div className="back" onClick={this.handleFlip}>
+                        <img src={check} alt="check" />
+                      </div>
+                    </ReactCardFlip>
+                  </label>
+                  <Modal
+                    style={{ zIndex: 5000 }}
+                    show={this.state.modalId === id ? true : false}
+                    onHide={() =>
+                      this.setState({ showModal: false, modalId: null })
+                    }
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>Counter</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className="modal-video-card">
+                        <Image
+                          className="thumbnail"
+                          src={videoThumbnail}
+                          width="120"
+                          height="90"
+                          rounded
+                        />
+                        <p style={{ color: " #000" }}>{videoTitle}</p>
+                      </div>
+                      <div className="modal-counter">
+                        <span
+                          className="minus bg-dark"
+                          onClick={() => this.decrementData(video, id)}
+                        >
+                          -
+                        </span>
+                        <input
+                          type="number"
+                          className="count"
+                          name="qty"
+                          value={this.state.count}
+                        />
+                        <span
+                          className="plus bg-dark"
+                          onClick={() => this.incrementData(video, id)}
+                        >
+                          +
+                        </span>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <label for={id}>
+                        <Button
+                          variant="secondary"
+                          onClick={() => this.closeModal(id)}
+                        >
+                          Close
+                        </Button>
+
+                        <Button
+                          variant="primary"
+                          onClick={() =>
+                            this.setState({
+                              showModal: false,
+                              modalId: null,
+                              count: 0,
+                            })
+                          }
+                        >
+                          Save Changes
+                        </Button>
+                      </label>
+                    </Modal.Footer>
+                  </Modal>
+                </>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
     return (
       <>
         <Button
@@ -400,6 +534,7 @@ class Time extends React.Component {
                 </>
               );
             })}
+            {affirmation}
           </div>
         </div>
       </>

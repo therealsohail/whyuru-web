@@ -21,13 +21,16 @@ import { AuthProvider } from "../Context/AuthContext";
 import SignUp from "../Pages/SignUp";
 import Login from "../Pages/Login";
 import Scheduler from "../Pages/Scheduler";
+import Journals from "../Pages/Journals";
+import CreateJournal from "../Pages/CreateJournal";
 
 const Main = withRouter(({ location }) => {
   return (
     <div>
-      {location.pathname !== "/login" && location.pathname !== "/signup" && (
-        <Navbar />
-      )}
+      {location.pathname !== "/login" &&
+        location.pathname !== "/signup" &&
+        location.pathname !== "/journals" &&
+        location.pathname !== "/createjournal" && <Navbar />}
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/signup" component={SignUp} />
@@ -46,6 +49,8 @@ const Main = withRouter(({ location }) => {
         <Route path="/blog/:id" component={BlogPost} />
         <Route path="/blogs" component={Blogs} />
         <Route path="/scheduler" component={Scheduler} />
+        <Route path="/journals" component={Journals} />
+        <Route path="/createjournal" component={CreateJournal} />
       </Switch>
     </div>
   );

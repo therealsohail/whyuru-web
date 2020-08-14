@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Banner } from "../Components/Banner";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Nav } from "react-bootstrap";
 
 import Footer from "../Components/Footer";
 import bedtimeHero from "../Assets/bedtime.jpg";
@@ -77,38 +78,45 @@ const Bedtime = () => {
           </select>
         </div>
         <div style={{ clear: "both" }} className="category-nav">
-          <nav className="nav nav-pills nav-fill">
-            <Link
-              onClick={() => setCategory("Openess")}
-              className="cat-nav nav-item nav-link active"
-            >
-              Openess
-            </Link>
-            <Link
-              onClick={() => setCategory("Conscientiosness")}
-              className="cat-nav nav-item nav-link"
-            >
-              Conscientiosness
-            </Link>
-            <Link
-              onClick={() => setCategory("Extroversion")}
-              className="cat-nav nav-item nav-link"
-            >
-              Extroversion
-            </Link>
-            <Link
-              onClick={() => setCategory("Agreeableness")}
-              className="cat-nav nav-item nav-link"
-            >
-              Agreeableness
-            </Link>
-            <Link
-              onClick={() => setCategory("Neuroticism")}
-              className="cat-nav nav-item nav-link"
-            >
-              Neuroticism
-            </Link>
-          </nav>
+          <Nav fill variant="pills" defaultActiveKey="#">
+            <Nav.Item>
+              <Nav.Link href="#" onClick={() => setCategory("Openess")}>
+                Openess
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                eventKey="link-1"
+                onClick={() => setCategory("Conscientiousness")}
+              >
+                Conscientiousness
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                eventKey="link-2"
+                onClick={() => setCategory("Extroversion")}
+              >
+                Extroversion
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                eventKey="link-3"
+                onClick={() => setCategory("Agreeableness")}
+              >
+                Agreeableness
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                eventKey="link-4"
+                onClick={() => setCategory("Neuroticism")}
+              >
+                Neuroticism
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
         </div>
         <div
           style={{ float: "right", paddingTop: 20 }}

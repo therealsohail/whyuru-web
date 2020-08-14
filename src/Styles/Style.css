@@ -280,6 +280,86 @@
   }
 }
 
+.sidebar-heading {
+  color: white;
+}
+
+.list-group a {
+  color: white;
+}
+
+.list-group a:hover {
+  color: white;
+}
+
+#wrapper {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #095d8d;
+  text-align: center;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+.initials {
+  text-transform: uppercase;
+  margin: auto;
+  position: relative;
+  font-size: 20px;
+  /* 50% of parent */
+  line-height: 25px;
+  /* 50% of parent */
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+}
+
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
