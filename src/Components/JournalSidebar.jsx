@@ -31,7 +31,7 @@ const JournalSidebar = (props) => {
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
-          array.push(doc.data());
+          array.push({ ...doc.data(), id: doc.id });
         });
         fbData.push(array);
         setFbData(fbData[0]);
@@ -71,7 +71,8 @@ const JournalSidebar = (props) => {
           {fbData.map((item) => {
             return (
               <Link
-                to="/createjournal"
+                to={`/journals/${item.id}`}
+                key={item.id}
                 className="list-group-item list-group-item-action bg-dark"
               >
                 {item.title}

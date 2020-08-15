@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav, NavItem, Button } from "react-bootstrap";
 
 import schedulerPic from "../Assets/scheduler.jpg";
 import { Banner } from "../Components/Banner";
 import Sidebar from "../Components/Sidebar";
+import axios from "axios";
 
 const Scheduler = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -38,6 +39,20 @@ const Scheduler = () => {
 
   let monthNumber = d.getMonth();
   let year = d.getFullYear();
+  let day = d.getDate();
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:8080/api//WeeklySchedulers", {
+        date: `${year}-${monthNumber + 1}-${day}`,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   let sidebar;
 

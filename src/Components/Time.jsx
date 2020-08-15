@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import InputMoment from "input-moment";
 import "input-moment/dist/input-moment.css";
+import axios from "axios";
 import { Nav, Image, Button, Modal } from "react-bootstrap";
 import { client } from "../client";
 import ReactCardFlip from "react-card-flip";
@@ -34,10 +35,33 @@ class Time extends React.Component {
 
   handleSave = () => {
     let dateTimeArray = this.state.m.format("llll").split(" ");
+    let timeData = dateTimeArray[4] + " " + dateTimeArray[5];
+    let dateData =
+      dateTimeArray[3] +
+      " " +
+      dateTimeArray[1] +
+      " " +
+      dateTimeArray[2].replace(",", "");
     this.setState({
-      time: dateTimeArray[4] + " " + dateTimeArray[5],
-      date: dateTimeArray[3] + " " + dateTimeArray[1] + " " + dateTimeArray[2],
+      time: timeData,
+      date: dateData,
     });
+    console.log(this.state.date, this.state.time);
+    setTimeout(() => {
+       axios
+      .post("http://localhost:8080/api/Schedular", {
+        date: this.state.date,
+        time: this.state.time,
+        data: this.state.data,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }, 1000);
+   
   };
 
   componentDidMount() {

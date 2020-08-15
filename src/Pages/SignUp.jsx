@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, InputGroup } from "react-bootstrap";
+import { Form, Button, InputGroup, Spinner } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 
 import { app, db } from "../firebaseConfig";
@@ -11,7 +11,7 @@ const SignUp = ({ history }) => {
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [validate, setValidate] = useState(false);
 
@@ -24,7 +24,6 @@ const SignUp = ({ history }) => {
     lname,
     email,
     password,
-    confirmPassword,
   };
 
   const handleSubmit = (e) => {
@@ -32,6 +31,7 @@ const SignUp = ({ history }) => {
     const { errors, valid } = signupValidator(credientials);
 
     if (valid) {
+      setLoading(true);
       app
         .auth()
         .createUserWithEmailAndPassword(
@@ -144,7 +144,16 @@ const SignUp = ({ history }) => {
               </InputGroup>
             </Form.Group>
 
-            <Button variant="outline-primary" type="submit">
+            <Button variant="outline-primary" disabled={loading} type="submit">
+              {loading ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : null}
               Submit
             </Button>
           </Form>

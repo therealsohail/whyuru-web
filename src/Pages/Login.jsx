@@ -1,21 +1,19 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Form, Button, InputGroup } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Form, Button, InputGroup, Spinner } from "react-bootstrap";
 import { Link, withRouter, Redirect } from "react-router-dom";
 
 import { app } from "../firebaseConfig";
 import { validateLogin } from "../validators";
 import { AuthContext } from "../Context/AuthContext";
-import {Alert} from "react-bootstrap"
+import { Alert } from "react-bootstrap";
 
 const Login = (props) => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [validate, setValidate] = useState(false)
-  const [error, setError] = useState({})
-  const [fbError, setFbError] = useState("")
-
-  
+  const [validate, setValidate] = useState(false);
+  const [error, setError] = useState({});
+  const [fbError, setFbError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +21,7 @@ const Login = (props) => {
     const { errors, valid } = validateLogin(email, password);
 
     if (valid) {
+      setLoading(true);
       app
         .auth()
         .signInWithEmailAndPassword(email, password)
@@ -32,17 +31,16 @@ const Login = (props) => {
         .catch((err) => {
           console.error(err);
           var errorCode = err.code;
-      var errorMessage = err.message;
+          var errorMessage = err.message;
 
-      if(errorCode === 'auth/wrong-password') {
-        setFbError("Wrong email or password")
-      }
+          if (errorCode === "auth/wrong-password") {
+            setFbError("Wrong email or password");
+          }
         });
     } else if (!valid) {
       setError({ ...errors });
-      
     }
-    setValidate(true)
+    setValidate(true);
   };
 
   const { currentUser } = useContext(AuthContext);
@@ -51,7 +49,12 @@ const Login = (props) => {
     return <Redirect to="/" />;
   }
 
-  const wrongCred = (fbError === "Wrong email or password") ? (<Alert className="form-box" style={{padding: 10}} variant="danger">Invalid Email or password</Alert>) : null
+  const wrongCred =
+    fbError === "Wrong email or password" ? (
+      <Alert className="form-box" style={{ padding: 10 }} variant="danger">
+        Invalid Email or password
+      </Alert>
+    ) : null;
 
   function showPassword() {
     var x = document.getElementById("password");
@@ -79,7 +82,6 @@ const Login = (props) => {
           <h1>Login</h1>
           <hr className="deco-line" />
           {wrongCred}
-          
         </div>
         <div className="form-box">
           <Form noValidate onSubmit={handleSubmit} validated={validate}>
@@ -97,15 +99,15 @@ const Login = (props) => {
             <Form.Group controlId="formGroupPassword">
               <Form.Label>Password</Form.Label>
               <InputGroup>
-              <Form.Control
-                required
-                id="password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <InputGroup.Append>
+                <Form.Control
+                  required
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <InputGroup.Append>
                   <Button
                     variant="outline-secondary"
                     id="showButton"
@@ -115,11 +117,19 @@ const Login = (props) => {
                   </Button>
                 </InputGroup.Append>
                 {passwordAlert}
-              </InputGroup >
-              
+              </InputGroup>
             </Form.Group>
-            
-            <Button variant="outline-primary" type="submit">
+
+            <Button variant="outline-primary" type="submit" disabled={loading}>
+              {loading ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : null}
               Login
             </Button>
           </Form>
