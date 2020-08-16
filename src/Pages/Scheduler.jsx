@@ -133,15 +133,14 @@ class Scheduler extends React.Component {
   //   );
   // }
 
-  sidebar = this.state.sidebarOpen ? (
-    <Sidebar close={this.sidebarCloseHandler} sidebar="sidebar" />
-  ) : null;
-
   render() {
     console.log(this.state.sidebarOpen);
+    let sidebar = this.state.sidebarOpen ? (
+      <Sidebar close={this.sidebarCloseHandler} sidebar="sidebar" />
+    ) : null;
     return (
       <>
-        {this.sidebar}
+        {sidebar}
 
         <Banner pic={schedulerPic} heading="Scheduler" />
         <h1 style={{ paddingTop: 30, paddingLeft: 50 }}>{`${
@@ -160,6 +159,25 @@ class Scheduler extends React.Component {
           <div className="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4">
             <div className="col-sm-4">
               <h4 style={{ textAlign: "center" }}>Monday</h4>
+              {this.state.monday.map((alarm) => {
+                return (
+                  <div className="scheduler-card">
+                    <h6 className="time">{alarm.time}</h6>
+                    <hr />
+                    <div className="scheduler-card-deck">
+                      {alarm.data.map((item) => {
+                        return (
+                          <img
+                            className="scheduler-img"
+                            src={item.thumbnail}
+                            alt={item.title}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
               {/* {mon &&
                 mon.data.map((item, id) => {
                   return (
@@ -175,6 +193,25 @@ class Scheduler extends React.Component {
             </div>
             <div className="col-sm-4">
               <h4 style={{ textAlign: "center" }}>Tuesday</h4>
+              {this.state.tuesday.map((alarm) => {
+                return (
+                  <div className="scheduler-card">
+                    <h6 className="time">{alarm.time}</h6>
+                    <hr />
+                    <div className="scheduler-card-deck">
+                      {alarm.data.map((item) => {
+                        return (
+                          <img
+                            className="scheduler-img"
+                            src={item.thumbnail}
+                            alt={item.title}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
               {/* {tuesday &&
                 tuesday.data.map((item, id) => {
                   return (
@@ -190,6 +227,25 @@ class Scheduler extends React.Component {
             </div>
             <div className="col-sm-4">
               <h4 style={{ textAlign: "center" }}>Wednesday</h4>
+              {this.state.wednesday.map((alarm) => {
+                return (
+                  <div className="scheduler-card">
+                    <h6 className="time">{alarm.time}</h6>
+                    <hr />
+                    <div className="scheduler-card-deck">
+                      {alarm.data.map((item) => {
+                        return (
+                          <img
+                            className="scheduler-img"
+                            src={item.thumbnail}
+                            alt={item.title}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
               {/* {wednesday &&
                 wednesday.data.map((item, id) => {
                   return (
@@ -205,6 +261,25 @@ class Scheduler extends React.Component {
             </div>
             <div className="col-sm-4">
               <h4 style={{ textAlign: "center" }}>Thursday</h4>
+              {this.state.thursday.map((alarm) => {
+                return (
+                  <div className="scheduler-card">
+                    <h6 className="time">{alarm.time}</h6>
+                    <hr />
+                    <div className="scheduler-card-deck">
+                      {alarm.data.map((item) => {
+                        return (
+                          <img
+                            className="scheduler-img"
+                            src={item.thumbnail}
+                            alt={item.title}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
               {/* {thursday &&
                 thursday.data.map((item, id) => {
                   return (
@@ -220,6 +295,25 @@ class Scheduler extends React.Component {
             </div>
             <div className="col-sm-4">
               <h4 style={{ textAlign: "center" }}>Friday</h4>
+              {this.state.friday.map((alarm) => {
+                return (
+                  <div className="scheduler-card">
+                    <h6 className="time">{alarm.time}</h6>
+                    <hr />
+                    <div className="scheduler-card-deck">
+                      {alarm.data.map((item) => {
+                        return (
+                          <img
+                            className="scheduler-img"
+                            src={item.thumbnail}
+                            alt={item.title}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
               {/* {friday &&
                 friday.data.map((item, id) => {
                   return (
@@ -235,6 +329,25 @@ class Scheduler extends React.Component {
             </div>
             <div className="col-sm-4">
               <h4 style={{ textAlign: "center" }}>Saturday</h4>
+              {this.state.saturday.map((alarm) => {
+                return (
+                  <div className="scheduler-card">
+                    <h6 className="time">{alarm.time}</h6>
+                    <hr />
+                    <div className="scheduler-card-deck">
+                      {alarm.data.map((item) => {
+                        return (
+                          <img
+                            className="scheduler-img"
+                            src={item.thumbnail}
+                            alt={item.title}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
               {/* {saturday &&
                 saturday.data.map((item, id) => {
                   return (
@@ -250,7 +363,25 @@ class Scheduler extends React.Component {
             </div>
             <div className="col-sm-4">
               <h4 style={{ textAlign: "center" }}>Sunday</h4>
-
+              {this.state.sunday.map((alarm) => {
+                return (
+                  <div className="scheduler-card">
+                    <h6 className="time">{alarm.time}</h6>
+                    <hr />
+                    <div className="scheduler-card-deck">
+                      {alarm.data.map((item) => {
+                        return (
+                          <img
+                            className="scheduler-img"
+                            src={item.thumbnail}
+                            alt={item.title}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
               {/* {sunday &&
                 sunday.data.map((item) => {
                   console.log(item);

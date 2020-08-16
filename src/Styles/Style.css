@@ -360,6 +360,47 @@
   font-weight: bold;
 }
 
+.scheduler-card {
+  width: 200px;
+  border-radius: 20px;
+  background: #f1f1f1;
+  padding: 15px;
+  font-family: "Montserrat";
+  margin: auto;
+  margin-top: 20px;
+}
+
+.scheduler-card .time {
+  color: dimgray !important;
+}
+
+.scheduler-card-deck {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.scheduler-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 26%;
+          flex: 0 0 26%;
+}
+
+.scheduler-img img {
+  padding-bottom: 5px;
+}
+
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
