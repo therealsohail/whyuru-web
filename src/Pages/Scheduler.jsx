@@ -5,31 +5,26 @@ import schedulerPic from "../Assets/scheduler.jpg";
 import { Banner } from "../Components/Banner";
 import Sidebar from "../Components/Sidebar";
 import axios from "axios";
-import { isEmptyObject } from "jquery";
 
-const Scheduler = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [monday, setMonday] = useState([]);
-  const [tuesday, setTuesday] = useState([]);
-  const [wednesday, setWednesday] = useState([]);
-  const [thursday, setThursday] = useState([]);
-  const [friday, setFriday] = useState([]);
-  const [saturday, setSaturday] = useState([]);
-  const [sunday, setSunday] = useState([]);
-
-  // const openHandler = () => {
-  //   if (!sidebarOpen) {
-  //     setSidebarOpen(true);
-  //   } else {
-  //     setSidebarOpen(false);
-  //   }
-  // };
-
-  const sidebarCloseHandler = () => {
-    setSidebarOpen(false);
+class Scheduler extends React.Component {
+  state = {
+    sidebarOpen: false,
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+    sunday: [],
   };
 
-  const monthsName = [
+  sidebarCloseHandler = () => {
+    this.setState({
+      sidebarOpen: false,
+    });
+  };
+
+  monthsName = [
     "January",
     "February",
     "March",
@@ -43,26 +38,28 @@ const Scheduler = () => {
     "November",
     "December",
   ];
-  let dt = new Date();
-  let year = dt.getFullYear();
-  let month = dt.getMonth() + 1;
-  let day = dt.getDate();
-  let formattedYear = month.toString().length === 1 ? `0${month}` : month;
 
-  let date = `${year}-${formattedYear}-${day}`;
+  dt = new Date();
+  year = this.dt.getFullYear();
+  month = this.dt.getMonth() + 1;
+  day = this.dt.getDate();
+  formattedYear =
+    this.month.toString().length === 1 ? `0${this.month}` : this.month;
 
-  let monthNumber = dt.getMonth();
+  date = `${this.year}-${this.formattedYear}-${this.day}`;
+
+  monthNumber = this.dt.getMonth();
   // let year = d.getFullYear();
   // let day = d.getDate();
-  let sun = [];
-  let mon = [];
-  let tue = [];
-  let wed = [];
-  let thu = [];
-  let fri = [];
-  let sat = [];
+  sun = [];
+  mon = [];
+  tue = [];
+  wed = [];
+  thu = [];
+  fri = [];
+  sat = [];
 
-  useEffect(() => {
+  componentDidMount() {
     axios
       .post("https://whyuruapi.herokuapp.com/api//WeeklySchedulers", {
         date: "2020-08-18",
@@ -73,179 +70,99 @@ const Scheduler = () => {
           if (obj.day === "Sunday") {
             if (obj) {
               // console.log(obj);
-              sun.push(obj);
-              setSunday([obj]);
+              // sun.push(obj);
+              this.setState({ sunday: [...this.state.sunday, obj] });
             }
           }
           if (obj.day === "Monday") {
             if (obj) {
               console.log(obj);
-              mon.push({ ...obj });
-              monday.push(mon);
+              // mon.push({ ...obj });
+              this.setState({ monday: [...this.state.monday, obj] });
             }
           }
           if (obj.day === "Tuesday") {
             if (obj) {
-              tue.push(obj);
-              setTuesday([obj]);
+              // tue.push(obj);
+              this.setState({ tuesday: [...this.state.tuesday, obj] });
             }
           }
           if (obj.day === "Wednesday") {
             if (obj) {
-              wed.push(obj);
-              setWednesday([obj]);
+              // wed.push(obj);
+              this.setState({ wednesday: [...this.state.wednesday, obj] });
             }
           }
           if (obj.day === "Thursday") {
             if (obj) {
-              thu.push(obj);
-              setThursday([obj]);
+              // thu.push(obj);
+              this.setState({ thursday: [...this.state.thursday, obj] });
             }
           }
           if (obj.day === "Friday") {
             if (obj) {
-              fri.push(obj);
-              setFriday([obj]);
+              // fri.push(obj);
+              this.setState({ friday: [...this.state.friday, obj] });
             }
           }
           if (obj.day === "Saturday") {
             if (obj) {
-              sat.push(obj);
-              setSaturday([obj]);
+              // sat.push(obj);
+              this.setState({ saturday: [...this.state.saturday, obj] });
             }
           }
         });
-        setMonday([...monday[0]]);
-        console.log(monday);
+        console.log(this.state.monday);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
-  let sidebar;
-
-  if (sidebarOpen) {
-    sidebar = <Sidebar close={sidebarCloseHandler} sidebar="sidebar" />;
   }
+  handleSideBar = () => {
+    console.log("button clicked");
+    this.setState({
+      sidebarOpen: true,
+    });
+  };
 
-  return (
-    <>
-      {sidebar}
+  // sidebar;
 
-      <Banner pic={schedulerPic} heading="Scheduler" />
-      <h1
-        style={{ paddingTop: 30, paddingLeft: 50 }}
-      >{`${monthsName[monthNumber]} ${year}`}</h1>
-      <Button
-        className="add-button"
-        bsStyle="primary"
-        onClick={() => setSidebarOpen(true)}
-      >
-        Add Videos
-      </Button>
+  // if(this.state.sidebarOpen) {
+  //   this.sidebar = (
+  //     <Sidebar close={this.state.sidebarCloseHandler} sidebar="sidebar" />
+  //   );
+  // }
 
-      <hr />
-      <div className="container horizontal-scrollable">
-        <div className="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4">
-          <div className="col-sm-4">
-            <h4 style={{ textAlign: "center" }}>Monday</h4>
-            {/* {mon &&
-              mon.data.map((item, id) => {
-                return (
-                  <img
-                    style={{ paddingTop: 10, margin: "auto" }}
-                    src={item.thumbnail}
-                    alt={item.title}
-                    width="200"
-                    height="120"
-                  />
-                );
-              })} */}
-          </div>
-          <div className="col-sm-4">
-            <h4 style={{ textAlign: "center" }}>Tuesday</h4>
-            {/* {tuesday &&
-              tuesday.data.map((item, id) => {
-                return (
-                  <img
-                    style={{ paddingTop: 10, margin: "auto" }}
-                    src={item.thumbnail}
-                    alt={item.title}
-                    width="200"
-                    height="120"
-                  />
-                );
-              })} */}
-          </div>
-          <div className="col-sm-4">
-            <h4 style={{ textAlign: "center" }}>Wednesday</h4>
-            {/* {wednesday &&
-              wednesday.data.map((item, id) => {
-                return (
-                  <img
-                    style={{ paddingTop: 10, margin: "auto" }}
-                    src={item.thumbnail}
-                    alt={item.title}
-                    width="200"
-                    height="120"
-                  />
-                );
-              })} */}
-          </div>
-          <div className="col-sm-4">
-            <h4 style={{ textAlign: "center" }}>Thursday</h4>
-            {/* {thursday &&
-              thursday.data.map((item, id) => {
-                return (
-                  <img
-                    style={{ paddingTop: 10, margin: "auto" }}
-                    src={item.thumbnail}
-                    alt={item.title}
-                    width="200"
-                    height="120"
-                  />
-                );
-              })} */}
-          </div>
-          <div className="col-sm-4">
-            <h4 style={{ textAlign: "center" }}>Friday</h4>
-            {/* {friday &&
-              friday.data.map((item, id) => {
-                return (
-                  <img
-                    style={{ paddingTop: 10, margin: "auto" }}
-                    src={item.thumbnail}
-                    alt={item.title}
-                    width="200"
-                    height="120"
-                  />
-                );
-              })} */}
-          </div>
-          <div className="col-sm-4">
-            <h4 style={{ textAlign: "center" }}>Saturday</h4>
-            {/* {saturday &&
-              saturday.data.map((item, id) => {
-                return (
-                  <img
-                    style={{ paddingTop: 10, margin: "auto" }}
-                    src={item.thumbnail}
-                    alt={item.title}
-                    width="200"
-                    height="120"
-                  />
-                );
-              })} */}
-          </div>
-          <div className="col-sm-4">
-            <h4 style={{ textAlign: "center" }}>Sunday</h4>
+  sidebar = this.state.sidebarOpen ? (
+    <Sidebar close={this.sidebarCloseHandler} sidebar="sidebar" />
+  ) : null;
 
-            {/* {sunday &&
-              sunday.data.map((item) => {
-                console.log(item);
-                return (
-                  <center>
+  render() {
+    console.log(this.state.sidebarOpen);
+    return (
+      <>
+        {this.sidebar}
+
+        <Banner pic={schedulerPic} heading="Scheduler" />
+        <h1 style={{ paddingTop: 30, paddingLeft: 50 }}>{`${
+          this.monthsName[this.monthNumber]
+        } ${this.year}`}</h1>
+        <Button
+          className="add-button"
+          bsStyle="primary"
+          onClick={this.handleSideBar}
+        >
+          Add Videos
+        </Button>
+
+        <hr />
+        <div className="container horizontal-scrollable">
+          <div className="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4">
+            <div className="col-sm-4">
+              <h4 style={{ textAlign: "center" }}>Monday</h4>
+              {/* {mon &&
+                mon.data.map((item, id) => {
+                  return (
                     <img
                       style={{ paddingTop: 10, margin: "auto" }}
                       src={item.thumbnail}
@@ -253,15 +170,109 @@ const Scheduler = () => {
                       width="200"
                       height="120"
                     />
-                  </center>
-                );
-              })} */}
+                  );
+                })} */}
+            </div>
+            <div className="col-sm-4">
+              <h4 style={{ textAlign: "center" }}>Tuesday</h4>
+              {/* {tuesday &&
+                tuesday.data.map((item, id) => {
+                  return (
+                    <img
+                      style={{ paddingTop: 10, margin: "auto" }}
+                      src={item.thumbnail}
+                      alt={item.title}
+                      width="200"
+                      height="120"
+                    />
+                  );
+                })} */}
+            </div>
+            <div className="col-sm-4">
+              <h4 style={{ textAlign: "center" }}>Wednesday</h4>
+              {/* {wednesday &&
+                wednesday.data.map((item, id) => {
+                  return (
+                    <img
+                      style={{ paddingTop: 10, margin: "auto" }}
+                      src={item.thumbnail}
+                      alt={item.title}
+                      width="200"
+                      height="120"
+                    />
+                  );
+                })} */}
+            </div>
+            <div className="col-sm-4">
+              <h4 style={{ textAlign: "center" }}>Thursday</h4>
+              {/* {thursday &&
+                thursday.data.map((item, id) => {
+                  return (
+                    <img
+                      style={{ paddingTop: 10, margin: "auto" }}
+                      src={item.thumbnail}
+                      alt={item.title}
+                      width="200"
+                      height="120"
+                    />
+                  );
+                })} */}
+            </div>
+            <div className="col-sm-4">
+              <h4 style={{ textAlign: "center" }}>Friday</h4>
+              {/* {friday &&
+                friday.data.map((item, id) => {
+                  return (
+                    <img
+                      style={{ paddingTop: 10, margin: "auto" }}
+                      src={item.thumbnail}
+                      alt={item.title}
+                      width="200"
+                      height="120"
+                    />
+                  );
+                })} */}
+            </div>
+            <div className="col-sm-4">
+              <h4 style={{ textAlign: "center" }}>Saturday</h4>
+              {/* {saturday &&
+                saturday.data.map((item, id) => {
+                  return (
+                    <img
+                      style={{ paddingTop: 10, margin: "auto" }}
+                      src={item.thumbnail}
+                      alt={item.title}
+                      width="200"
+                      height="120"
+                    />
+                  );
+                })} */}
+            </div>
+            <div className="col-sm-4">
+              <h4 style={{ textAlign: "center" }}>Sunday</h4>
+
+              {/* {sunday &&
+                sunday.data.map((item) => {
+                  console.log(item);
+                  return (
+                    <center>
+                      <img
+                        style={{ paddingTop: 10, margin: "auto" }}
+                        src={item.thumbnail}
+                        alt={item.title}
+                        width="200"
+                        height="120"
+                      />
+                    </center>
+                  );
+                })} */}
+            </div>
           </div>
+          <hr />
         </div>
-        <hr />
-      </div>
-    </>
-  );
-};
+      </>
+    );
+  }
+}
 
 export default Scheduler;
