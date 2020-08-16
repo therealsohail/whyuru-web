@@ -80,8 +80,8 @@ const Scheduler = () => {
           if (obj.day === "Monday") {
             if (obj) {
               console.log(obj);
-              // mon.push(obj);
-              setMonday([monday, { ...obj }]);
+              mon.push({ ...obj });
+              monday.push(mon);
             }
           }
           if (obj.day === "Tuesday") {
@@ -115,6 +115,7 @@ const Scheduler = () => {
             }
           }
         });
+        setMonday([...monday[0]]);
         console.log(monday);
       })
       .catch((err) => {
