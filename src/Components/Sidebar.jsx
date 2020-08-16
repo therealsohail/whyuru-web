@@ -17,6 +17,16 @@ class Sidebar extends React.Component {
       this.props.close();
     }, 1000);
   };
+
+  closeOnSave = () => {
+    this.setState({
+      sidebarClass: "sidebar close",
+    });
+    this.refs.time.clearData();
+    setTimeout(() => {
+      this.props.close();
+    }, 1000);
+  };
   render() {
     return (
       <div className={this.state.sidebarClass}>
@@ -28,6 +38,7 @@ class Sidebar extends React.Component {
           ref="time"
           sidebarClass={this.state.sidebarClass}
           closeHandler={this.closeHandler}
+          closeOnSave={this.closeOnSave}
         />
       </div>
     );

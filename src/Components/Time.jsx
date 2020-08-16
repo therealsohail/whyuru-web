@@ -48,20 +48,20 @@ class Time extends React.Component {
     });
     console.log(this.state.date, this.state.time);
     setTimeout(() => {
-       axios
-      .post("http://localhost:8080/api/Schedular", {
-        date: this.state.date,
-        time: this.state.time,
-        data: this.state.data,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      axios
+        .post("https://whyuruapi.herokuapp.com/api/Schedular", {
+          date: this.state.date,
+          time: this.state.time,
+          data: this.state.data,
+        })
+        .then((res) => {
+          console.log(res);
+          this.props.closeOnSave();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }, 1000);
-   
   };
 
   componentDidMount() {

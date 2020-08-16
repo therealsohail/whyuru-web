@@ -3,7 +3,6 @@ import { Form, Button, InputGroup, Spinner } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 
 import { app, db } from "../firebaseConfig";
-import { useEffect } from "react";
 import { signupValidator } from "../validators";
 
 const SignUp = ({ history }) => {
