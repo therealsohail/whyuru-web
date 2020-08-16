@@ -46,7 +46,17 @@ class Time extends React.Component {
       time: timeData,
       date: dateData,
     });
-    console.log(this.state.date, this.state.time);
+
+    // let response = await axios.post(
+    //   "https://whyuruapi.herokuapp.com/api/Schedular",
+    //   {
+    //     date: this.state.date,
+    //     time: this.state.time,
+    //     data: this.state.data,
+    //   }
+    // );
+    // console.log(response);
+
     setTimeout(() => {
       axios
         .post("https://whyuruapi.herokuapp.com/api/Schedular", {
@@ -55,7 +65,9 @@ class Time extends React.Component {
           data: this.state.data,
         })
         .then((res) => {
-          console.log(res);
+          if (res) {
+            alert("Data added successfully");
+          }
           this.props.closeOnSave();
         })
         .catch((err) => {
@@ -76,7 +88,6 @@ class Time extends React.Component {
         this.setState({
           videos: res.items,
         });
-        console.log(this.state.videos);
       });
 
     client
@@ -109,7 +120,6 @@ class Time extends React.Component {
           this.setState({
             videos: res.items,
           });
-          console.log(this.state.videos);
         });
 
       client
@@ -196,21 +206,18 @@ class Time extends React.Component {
   };
 
   incrementData = (video, id) => {
-    this.setState(
-      {
-        count: this.state.count + 1,
-        data: [
-          ...this.state.data,
-          {
-            id: video.sys.id,
-            title: video.fields.name,
-            thumbnail: video.fields.videoThumbnail.fields.file.url,
-            video: video.fields.video.fields.file.url,
-          },
-        ],
-      },
-      () => console.log(this.state.data)
-    );
+    this.setState({
+      count: this.state.count + 1,
+      data: [
+        ...this.state.data,
+        {
+          id: video.sys.id,
+          title: video.fields.name,
+          thumbnail: video.fields.videoThumbnail.fields.file.url,
+          video: video.fields.video.fields.file.url,
+        },
+      ],
+    });
   };
 
   decrementData = (video, id) => {
@@ -232,7 +239,6 @@ class Time extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     let affirmation;
     if (this.state.type === "wakeup") {
       affirmation = (
@@ -377,6 +383,7 @@ class Time extends React.Component {
               <InputMoment
                 moment={this.state.m}
                 onChange={this.handleChange}
+                onSave={this.handleSave}
                 minStep={5}
               />
             </form>

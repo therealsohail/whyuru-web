@@ -65,22 +65,23 @@ const Scheduler = () => {
   useEffect(() => {
     axios
       .post("https://whyuruapi.herokuapp.com/api//WeeklySchedulers", {
-        date: date,
+        date: "2020-08-18",
       })
       .then((res) => {
         let response = res.data;
-        console.log(response);
         response.forEach((obj) => {
           if (obj.day === "Sunday") {
             if (obj) {
+              // console.log(obj);
               sun.push(obj);
               setSunday([obj]);
             }
           }
           if (obj.day === "Monday") {
             if (obj) {
-              mon.push(obj);
-              setMonday([obj]);
+              console.log(obj);
+              // mon.push(obj);
+              setMonday([monday, { ...obj }]);
             }
           }
           if (obj.day === "Tuesday") {
@@ -114,6 +115,7 @@ const Scheduler = () => {
             }
           }
         });
+        console.log(monday);
       })
       .catch((err) => {
         console.log(err);
@@ -125,8 +127,6 @@ const Scheduler = () => {
   if (sidebarOpen) {
     sidebar = <Sidebar close={sidebarCloseHandler} sidebar="sidebar" />;
   }
-
-  console.log(monday);
 
   return (
     <>
@@ -149,8 +149,8 @@ const Scheduler = () => {
         <div className="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4">
           <div className="col-sm-4">
             <h4 style={{ textAlign: "center" }}>Monday</h4>
-            {/* {monday &&
-              monday.data.map((item, id) => {
+            {/* {mon &&
+              mon.data.map((item, id) => {
                 return (
                   <img
                     style={{ paddingTop: 10, margin: "auto" }}
