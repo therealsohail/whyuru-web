@@ -66,10 +66,13 @@ body {
   overflow-x: auto;
 }
 
+@media (max-width: 450px) {
+  .sidebar {
+    width: 103vw;
+  }
+}
 .add-button {
-  position: relative;
-  left: 50vw;
-  bottom: 8vh;
+  margin-left: 50px;
 }
 
 #close {

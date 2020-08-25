@@ -146,7 +146,9 @@ class Scheduler extends React.Component {
         <h1 style={{ paddingTop: 30, paddingLeft: 50 }}>{`${
           this.monthsName[this.monthNumber]
         } ${this.year}`}</h1>
+
         <Button
+          style={{ marginTop: 30 }}
           className="add-button"
           bsStyle="primary"
           onClick={this.handleSideBar}
@@ -154,7 +156,7 @@ class Scheduler extends React.Component {
           Add Videos
         </Button>
 
-        <hr />
+        <hr style={{ clear: "both" }} />
         <div className="container horizontal-scrollable">
           <div className="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4">
             <div className="col-sm-4">

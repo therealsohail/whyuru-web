@@ -31,7 +31,7 @@ class Sidebar extends React.Component {
     return (
       <div className={this.state.sidebarClass}>
         <button id="close" onClick={this.closeHandler}>
-          <i className="fas fa-times" style={{ color: "#000" }}></i>
+          <i className="fas fa-times"></i>
         </button>
 
         <Time

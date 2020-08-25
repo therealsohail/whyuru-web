@@ -239,7 +239,7 @@
 .sidebar {
   height: 100vh;
   padding-left: 20px;
-  background-color: #ebebeb;
+  background-color: #f3f0ef;
   color: white;
   width: 420px;
   position: fixed;
@@ -279,6 +279,12 @@
   100% {
     right: -100%;
   }
+}
+
+.fa-times {
+  font-size: 1.5rem;
+  padding-top: 10px;
+  color: #63686b;
 }
 
 .sidebar-heading {
@@ -454,10 +460,14 @@ body {
   overflow-x: auto;
 }
 
+@media (max-width: 450px) {
+  .sidebar {
+    width: 103vw;
+  }
+}
+
 .add-button {
-  position: relative;
-  left: 50vw;
-  bottom: 8vh;
+  margin-left: 50px;
 }
 
 #close {

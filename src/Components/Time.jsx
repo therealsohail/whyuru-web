@@ -363,13 +363,6 @@ class Time extends React.Component {
     }
     return (
       <>
-        <Button
-          variant="primary"
-          className="save-button"
-          onClick={this.handleSave}
-        >
-          Save
-        </Button>
         <div style={{ paddingTop: 20 }}>
           <center>
             <form>

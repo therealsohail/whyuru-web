@@ -1,7 +1,7 @@
 .sidebar {
   height: 100vh;
   padding-left: 20px;
-  background-color: #ebebeb;
+  background-color: #f3f0ef;
   color: white;
   width: 420px;
   position: fixed;
@@ -26,4 +26,9 @@
   100% {
     right: -100%;
   }
+}
+.fa-times {
+  font-size: 1.5rem;
+  padding-top: 10px;
+  color: #63686b;
 }

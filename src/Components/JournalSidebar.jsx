@@ -38,7 +38,6 @@ const JournalSidebar = (props) => {
       })
       .catch((err) => console.error(err));
   }, []);
-  console.log(fbData);
   const changeToggle = () => {
     if (toggle) {
       setToggle(false);
@@ -46,8 +45,6 @@ const JournalSidebar = (props) => {
       setToggle(true);
     }
   };
-
-  console.log(fbData);
 
   return (
     <div className={toggle ? "d-flex toggled" : "d-flex"} id="wrapper">
@@ -71,7 +68,7 @@ const JournalSidebar = (props) => {
           {fbData.map((item) => {
             return (
               <Link
-                to={`/journals/${item.id}`}
+                to={`/journal/${item.id}`}
                 key={item.id}
                 className="list-group-item list-group-item-action bg-dark"
               >

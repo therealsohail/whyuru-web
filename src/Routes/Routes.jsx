@@ -23,6 +23,7 @@ import Login from "../Pages/Login";
 import Scheduler from "../Pages/Scheduler";
 import Journals from "../Pages/Journals";
 import CreateJournal from "../Pages/CreateJournal";
+import JournalDetail from "../Pages/JournalDetail";
 
 const Main = withRouter(({ location }) => {
   return (
@@ -30,7 +31,8 @@ const Main = withRouter(({ location }) => {
       {location.pathname !== "/login" &&
         location.pathname !== "/signup" &&
         location.pathname !== "/journals" &&
-        location.pathname !== "/createjournal" && <Navbar />}
+        location.pathname !== "/createjournal" &&
+        location.pathname !== "/journal/:journalId" && <Navbar />}
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/signup" component={SignUp} />
@@ -51,6 +53,7 @@ const Main = withRouter(({ location }) => {
         <Route path="/scheduler" component={Scheduler} />
         <Route path="/journals" component={Journals} />
         <Route path="/createjournal" component={CreateJournal} />
+        <Route path="/journal/:journalId" component={JournalDetail} />
       </Switch>
     </div>
   );
