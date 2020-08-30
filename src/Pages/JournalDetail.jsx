@@ -24,7 +24,7 @@ const JournalDetail = (props) => {
       });
     console.log(props);
   }, []);
-  console.log(data);
+
   return (
     <>
       <JournalSidebar>

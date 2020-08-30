@@ -60,9 +60,10 @@ class Scheduler extends React.Component {
   sat = [];
 
   componentDidMount() {
+    console.log(this.date);
     axios
-      .post("https://whyuruapi.herokuapp.com/api//WeeklySchedulers", {
-        date: "2020-08-18",
+      .post("https://whyuruapi.herokuapp.com/api/WeeklySchedulers", {
+        date: this.date,
       })
       .then((res) => {
         let response = res.data;

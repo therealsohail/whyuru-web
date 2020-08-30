@@ -59,7 +59,7 @@ class Time extends React.Component {
 
     setTimeout(() => {
       axios
-        .post("https://whyuruapi.herokuapp.com/api/Schedular", {
+        .post("https://whyuruapi.herokuapp.com/api/Scheduler", {
           date: this.state.date,
           time: this.state.time,
           data: this.state.data,
