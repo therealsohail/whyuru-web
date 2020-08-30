@@ -493,8 +493,9 @@ body {
   display: grid;
   -webkit-column-gap: 3px;
           column-gap: 3px;
-  -ms-grid-columns: auto auto;
-      grid-template-columns: auto auto;
+  -ms-grid-rows: 114px;
+  -ms-grid-columns: 180px 180px;
+      grid-template: 114px / 180px 180px;
   padding-top: 20px;
   padding-right: 20px;
 }
@@ -536,6 +537,16 @@ input[type="checkbox"] {
   left: 2.3em;
 }
 
+.affirmation {
+  margin-top: 40px;
+}
+
+.front {
+  width: 180px !important;
+  height: 114px;
+  margin: 0 !important;
+}
+
 .front img {
   margin-left: 30px;
 }
@@ -544,6 +555,8 @@ input[type="checkbox"] {
   width: 180px;
   height: 114px;
   background-color: #2ecc71;
+  padding: 0;
+  margin: 0 !important;
 }
 
 .back img {

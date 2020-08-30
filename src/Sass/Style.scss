@@ -94,7 +94,8 @@ body {
 .videos-container {
   display: grid;
   column-gap: 3px;
-  grid-template-columns: auto auto;
+  //grid-template-columns: auto auto;
+  grid-template: 114px / 180px 180px;
   padding-top: 20px;
   padding-right: 20px;
 
@@ -124,15 +125,25 @@ input[type="checkbox"] {
   top: 2.3em;
   left: 2.3em;
 }
+
+.affirmation {
+  margin-top: 40px;
+}
+
 .front {
   img {
     margin-left: 30px;
   }
+  width: 180px !important;
+  height: 114px;
+  margin: 0 !important;
 }
 .back {
   width: 180px;
   height: 114px;
   background-color: #2ecc71;
+  padding: 0;
+  margin: 0 !important;
   img {
     width: 100px;
     height: 100px;
