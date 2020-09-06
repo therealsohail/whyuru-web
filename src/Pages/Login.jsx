@@ -22,6 +22,7 @@ const Login = (props) => {
 
     if (valid) {
       setLoading(true);
+      setTimeout(() => setLoading(false), 3000);
       app
         .auth()
         .signInWithEmailAndPassword(email, password)

@@ -24,6 +24,13 @@ import Scheduler from "../Pages/Scheduler";
 import Journals from "../Pages/Journals";
 import CreateJournal from "../Pages/CreateJournal";
 import JournalDetail from "../Pages/JournalDetail";
+import TheBrain from "../Pages/The Mind/TheBrain";
+import Consciousness from "../Pages/The Mind/Consciousness";
+import LimbicSystem from "../Pages/The Mind/LimbicSystem";
+import Cortex from "../Pages/The Mind/Cortex";
+import Cerebellum from "../Pages/The Mind/Cerebellum";
+import Unconscious from "../Pages/The Mind/Unconscious";
+import Emotions from "../Pages/The Mind/Emotions";
 
 const Main = withRouter(({ location }) => {
   return (
@@ -47,13 +54,19 @@ const Main = withRouter(({ location }) => {
         <Route path="/symphony" component={Symphony} />
         <Route path="/flow" component={Flow} />
         <Route path="/BigFive" component={BigFive} />
-        <Route path="/TheMind" component={TheMind} />
+        <Route path="/consciousness" component={Consciousness} />
+        <Route path="/thebrain" component={TheBrain} />
+        <Route path="/limbicsystem" component={LimbicSystem} />
+        <Route path="/cortex" component={Cortex} />
+        <Route path="/cerebullum" component={Cerebellum} />
+        <Route path="/unconscious" component={Unconscious} />
+        <Route path="/emotions" component={Emotions} />
         <Route path="/blog/:id" component={BlogPost} />
         <Route path="/blogs" component={Blogs} />
-        <Route path="/scheduler" component={Scheduler} />
-        <Route path="/journals" component={Journals} />
-        <Route path="/createjournal" component={CreateJournal} />
-        <Route path="/journal/:journalId" component={JournalDetail} />
+        <PrivateRoute path="/scheduler" component={Scheduler} />
+        <PrivateRoute path="/journals" component={Journals} />
+        <PrivateRoute path="/createjournal" component={CreateJournal} />
+        <PrivateRoute path="/journal/:journalId" component={JournalDetail} />
       </Switch>
     </div>
   );

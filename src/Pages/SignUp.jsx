@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, InputGroup, Spinner } from "react-bootstrap";
+import { Form, Button, InputGroup, Spinner, Alert } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 
 import { app, db } from "../firebaseConfig";
@@ -11,6 +11,7 @@ const SignUp = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [fbError, setFbError] = useState();
 
   const [validate, setValidate] = useState(false);
 
@@ -25,12 +26,20 @@ const SignUp = ({ history }) => {
     password,
   };
 
+  const userInfo = {
+    fname: credientials.fname,
+    lname: credientials.lname,
+    email: credientials.email,
+    createdAt: new Date().toISOString(),
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { errors, valid } = signupValidator(credientials);
 
     if (valid) {
       setLoading(true);
+      setTimeout(() => setLoading(false), 5000);
       app
         .auth()
         .createUserWithEmailAndPassword(
@@ -38,19 +47,29 @@ const SignUp = ({ history }) => {
           credientials.password
         )
         .then((res) => {
-          return db.collection("users").doc(res.user.uid).set(credientials);
+          return db.collection("users").doc(res.user.uid).set(userInfo);
         })
         .then(() => {
           history.push("/");
         })
         .catch((err) => {
           console.log(err);
+          if (err.code === "auth/email-already-in-use") {
+            setFbError("Email already in use");
+          }
         });
     } else if (!valid) {
       setError({ ...errors });
     }
     setValidate(true);
   };
+
+  const wrongCred =
+    fbError === "Email already in use" ? (
+      <Alert className="form-box" style={{ padding: 10 }} variant="danger">
+        Email already in use
+      </Alert>
+    ) : null;
 
   const emailAlert = error.email ? (
     <Form.Control.Feedback type="invalid">{error.email}</Form.Control.Feedback>
@@ -82,6 +101,7 @@ const SignUp = ({ history }) => {
         <div className="signup-heading">
           <h1>SignUp</h1>
           <hr className="deco-line" />
+          {wrongCred}
         </div>
         <div className="form-box">
           <Form noValidate validated={validate} onSubmit={handleSubmit}>
