@@ -3,6 +3,7 @@ import moment from "moment";
 import InputMoment from "input-moment";
 import "input-moment/dist/input-moment.css";
 import axios from "axios";
+
 import { Nav, Image, Button, Modal } from "react-bootstrap";
 import { client } from "../client";
 import ReactCardFlip from "react-card-flip";
@@ -27,6 +28,7 @@ class Time extends React.Component {
     count: 0,
     showModal: false,
     modalId: null,
+    value: [],
   };
 
   handleChange = (m) => {
@@ -203,6 +205,7 @@ class Time extends React.Component {
       isSelected: this.state.isSelected.filter((num) => num !== id),
       data: this.state.data.filter((item) => item.id !== this.state.modalId),
     });
+    this.unCheck(id);
   };
 
   incrementData = (video, id) => {
@@ -238,7 +241,20 @@ class Time extends React.Component {
     });
   };
 
+  onChange(e, i) {
+    let value = this.state.value.slice();
+    value[i] = e.target.checked;
+    this.setState({ value });
+  }
+
+  unCheck(i) {
+    let value = this.state.value.slice();
+    value[i] = false;
+    this.setState({ value });
+  }
+
   render() {
+    console.log(this.state.value);
     let affirmation;
     if (this.state.type === "wakeup") {
       affirmation = (
@@ -255,11 +271,15 @@ class Time extends React.Component {
                 <>
                   <label for={id}>
                     <input
+                      checked={true}
+                      ref={"ref_" + id}
                       className="flip-check"
                       type="checkbox"
                       name={id}
                       id={id}
+                      checked={this.state.value[id]}
                       onClick={(e) => this.handleCheckbox(e, id, video, i)}
+                      onChange={(e) => this.onChange(e, id)}
                       disabled={
                         this.state.isSelected.includes(id) ? true : false
                       }
@@ -460,7 +480,9 @@ class Time extends React.Component {
                       type="checkbox"
                       name={id}
                       id={id}
+                      checked={this.state.value[id]}
                       onClick={(e) => this.handleCheckbox(e, id, video, i)}
+                      onChange={(e) => this.onChange(e, id)}
                       disabled={
                         this.state.isSelected.includes(id) ? true : false
                       }
@@ -534,6 +556,7 @@ class Time extends React.Component {
                     <Modal.Footer>
                       <label for={id}>
                         <Button
+                          id="closeModal"
                           variant="secondary"
                           onClick={() => this.closeModal(id)}
                         >

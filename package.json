@@ -14,6 +14,7 @@
     "firebase": "^7.17.1",
     "input-moment": "^0.4.0",
     "install": "^0.13.0",
+    "jQuery": "^1.7.4",
     "jquery": "^3.5.1",
     "moment": "^2.27.0",
     "npm": "^6.14.7",
