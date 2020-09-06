@@ -60,7 +60,6 @@ class Scheduler extends React.Component {
   sat = [];
 
   componentDidMount() {
-    console.log(this.date);
     axios
       .post("https://whyuruapi.herokuapp.com/api/WeeklySchedulers", {
         date: this.date,
@@ -75,8 +74,6 @@ class Scheduler extends React.Component {
           }
           if (obj.day === "Monday") {
             if (obj) {
-              console.log(obj);
-
               this.setState({ monday: [...this.state.monday, obj] });
             }
           }
@@ -106,7 +103,6 @@ class Scheduler extends React.Component {
             }
           }
         });
-        console.log(this.state.monday);
       })
       .catch((err) => {
         console.log(err);
@@ -120,7 +116,6 @@ class Scheduler extends React.Component {
   };
 
   render() {
-    console.log(this.state.sidebarOpen);
     let sidebar = this.state.sidebarOpen ? (
       <Sidebar close={this.sidebarCloseHandler} sidebar="sidebar" />
     ) : null;

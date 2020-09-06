@@ -254,7 +254,6 @@ class Time extends React.Component {
   }
 
   render() {
-    console.log(this.state.value);
     let affirmation;
     if (this.state.type === "wakeup") {
       affirmation = (
