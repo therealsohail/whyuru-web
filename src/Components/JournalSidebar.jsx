@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import { db } from "../firebaseConfig";
@@ -51,6 +52,14 @@ const JournalSidebar = (props) => {
       <div className="bg-dark border-right" id="sidebar-wrapper">
         <div className="sidebar-heading">
           <Link style={{ textDecoration: "none", color: "#fff" }} to="/">
+            <Link
+              style={{ textDecoration: "none", color: "#fff" }}
+              to="/journals"
+            >
+              <span style={{ marginRight: 10 }}>
+                <i className="fas fa-arrow-left"></i>
+              </span>{" "}
+            </Link>
             Whyuru
           </Link>
         </div>
@@ -68,7 +77,7 @@ const JournalSidebar = (props) => {
           {fbData.map((item) => {
             return (
               <Link
-                to={`/journal/${item.id}`}
+                to={`/journals/${item.id}`}
                 key={item.id}
                 className="list-group-item list-group-item-action bg-dark"
               >
@@ -115,4 +124,4 @@ const JournalSidebar = (props) => {
   );
 };
 
-export default JournalSidebar;
+export default withRouter(JournalSidebar);

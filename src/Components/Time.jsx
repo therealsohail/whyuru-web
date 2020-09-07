@@ -44,38 +44,31 @@ class Time extends React.Component {
       dateTimeArray[1] +
       " " +
       dateTimeArray[2].replace(",", "");
+
     this.setState({
       time: timeData,
       date: dateData,
     });
 
-    // let response = await axios.post(
-    //   "https://whyuruapi.herokuapp.com/api/Schedular",
-    //   {
-    //     date: this.state.date,
-    //     time: this.state.time,
-    //     data: this.state.data,
-    //   }
-    // );
-    // console.log(response);
-
-    setTimeout(() => {
-      axios
-        .post("https://whyuruapi.herokuapp.com/api/Scheduler", {
-          date: this.state.date,
-          time: this.state.time,
-          data: this.state.data,
-        })
-        .then((res) => {
-          if (res) {
-            alert("Data added successfully");
-          }
-          this.props.closeOnSave();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 1000);
+    if (!this.state.data.length <= 0) {
+      setTimeout(() => {
+        axios
+          .post("https://whyuruapi.herokuapp.com/api/Scheduler", {
+            date: this.state.date,
+            time: this.state.time,
+            data: this.state.data,
+          })
+          .then((res) => {
+            if (res) {
+              alert("Data added successfully");
+            }
+            this.props.closeOnSave();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, 1000);
+    }
   };
 
   componentDidMount() {
@@ -271,7 +264,6 @@ class Time extends React.Component {
                   <label for={id}>
                     <input
                       checked={true}
-                      ref={"ref_" + id}
                       className="flip-check"
                       type="checkbox"
                       name={id}

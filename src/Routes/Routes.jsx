@@ -39,7 +39,7 @@ const Main = withRouter(({ location }) => {
         location.pathname !== "/signup" &&
         location.pathname !== "/journals" &&
         location.pathname !== "/createjournal" &&
-        location.pathname !== "/journal/:journalId" && <Navbar />}
+        location.pathname.split("/")[1] !== "journals" && <Navbar />}
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/signup" component={SignUp} />
@@ -64,9 +64,12 @@ const Main = withRouter(({ location }) => {
         <Route path="/blog/:id" component={BlogPost} />
         <Route path="/blogs" component={Blogs} />
         <PrivateRoute path="/scheduler" component={Scheduler} />
-        <PrivateRoute path="/journals" component={Journals} />
+        <PrivateRoute exact path="/journals" component={Journals} />
         <PrivateRoute path="/createjournal" component={CreateJournal} />
-        <PrivateRoute path="/journal/:journalId" component={JournalDetail} />
+        <PrivateRoute
+          path="/journals/:journalId"
+          component={withRouter(JournalDetail)}
+        />
       </Switch>
     </div>
   );

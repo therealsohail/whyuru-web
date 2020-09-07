@@ -124,9 +124,13 @@ class Scheduler extends React.Component {
         {sidebar}
 
         <Banner pic={schedulerPic} heading="Scheduler" />
-        <h1 style={{ paddingTop: 30, paddingLeft: 50 }}>{`${
-          this.monthsName[this.monthNumber]
-        } ${this.year}`}</h1>
+        <h1 style={{ paddingTop: 30, paddingLeft: 50 }}>
+          <span style={{ fontWeight: "bold" }}>
+            {" "}
+            {`${this.monthsName[this.monthNumber]}`}{" "}
+          </span>{" "}
+          <span style={{ fontWeight: 400 }}>{`${this.year}`}</span>
+        </h1>
 
         <Button
           style={{ marginTop: 30 }}
@@ -134,7 +138,7 @@ class Scheduler extends React.Component {
           bsStyle="primary"
           onClick={this.handleSideBar}
         >
-          Add Videos
+          Add Schedule
         </Button>
 
         <hr style={{ clear: "both" }} />

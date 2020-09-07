@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Helmet } from "react";
 import JournalSidebar from "../Components/JournalSidebar";
 import { db } from "../firebaseConfig";
 import { useContext } from "react";

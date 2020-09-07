@@ -4,9 +4,31 @@ import { Link, NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { AuthContext } from "../Context/AuthContext";
 import { app } from "../firebaseConfig";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
+
+  const [navbar, setNavbar] = useState(
+    "navbar navbar-expand-sm fixed-top navbar-dark bg-light"
+  );
+  const [open, setOpen] = useState(false);
+
+  function toggleNav() {
+    if (
+      window.pageYOffset < 200 ||
+      (window.innerWidth >= 400 && window.innerWidth <= 450)
+    ) {
+      setOpen(!open);
+      if (window.pageYOffset < 200 && open === false) {
+        setNavbar("navbar navbar-expand-sm fixed-top navbar-dark bg-dark");
+      } else if (window.pageYOffset < 200 && open === true) {
+        setNavbar("navbar navbar-expand-sm fixed-top navbar-dark bg-light");
+      }
+    }
+  }
+
   const signOut = currentUser ? (
     <ul className="nav navbar-nav ml-auto w-100 justify-content-end">
       <li className="nav-item">
@@ -29,12 +51,10 @@ const Navbar = () => {
       </li>
     </ul>
   );
+
   return (
     <header id="header" className="header">
-      <nav
-        id="navbar"
-        className="navbar navbar-expand-sm fixed-top navbar-dark bg-light"
-      >
+      <nav id="navbar" className={navbar}>
         <NavLink to="/" className="navbar-brand ">
           Whyuru{" "}
         </NavLink>
@@ -45,7 +65,8 @@ const Navbar = () => {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          className="navbar-toggler navbar-toggler-right"
+          className=" navbar-toggler navbar-toggler-right"
+          onClick={() => toggleNav()}
         >
           <span className="navbar-toggler-icon"></span>
         </button>

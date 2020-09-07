@@ -6,6 +6,7 @@ import JournalSidebar from "../Components/JournalSidebar";
 import { db } from "../firebaseConfig";
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { Redirect } from "react-router-dom";
 
 const CreateJournal = () => {
   const { currentUser } = useContext(AuthContext);
@@ -30,6 +31,7 @@ const CreateJournal = () => {
       .then(() => {
         setLoading(false);
         console.log("uploaded");
+        return <Redirect to="/journals" />;
       })
       .catch((err) => {
         setLoading(false);
