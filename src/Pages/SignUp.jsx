@@ -47,6 +47,7 @@ const SignUp = ({ history }) => {
           credientials.password
         )
         .then((res) => {
+          console.log(res);
           return db.collection("users").doc(res.user.uid).set(userInfo);
         })
         .then(() => {

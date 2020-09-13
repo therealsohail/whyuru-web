@@ -3,15 +3,16 @@ import "firebase/auth";
 import "firebase/firestore";
 
 var firebaseConfig = {
-  apiKey: "AIzaSyBunyp5Tc1vh1keoAYr9BpjDmBctbRcDf0",
-  authDomain: "whyuru-12061.firebaseapp.com",
-  databaseURL: "https://whyuru-12061.firebaseio.com",
-  projectId: "whyuru-12061",
-  storageBucket: "whyuru-12061.appspot.com",
-  messagingSenderId: "202515089807",
-  appId: "1:202515089807:web:edffa2be67040c8571a3fa",
-  measurementId: "G-1J3JDPLHG1",
+  apiKey: "AIzaSyBWLAdQIwUdiIcQ9iRdCtERLPs0osOaB_E",
+  authDomain: "whyuru-web.firebaseapp.com",
+  databaseURL: "https://whyuru-web.firebaseio.com",
+  projectId: "whyuru-web",
+  storageBucket: "whyuru-web.appspot.com",
+  messagingSenderId: "954257930874",
+  appId: "1:954257930874:web:dd2a7d90d395fc4ee9d9c3",
+  measurementId: "G-454HYS8F2X",
 };
+
 // Initialize Firebase
 export const app = firebase.initializeApp(firebaseConfig);
 
