@@ -39,7 +39,8 @@ const Main = withRouter(({ location }) => {
         location.pathname !== "/signup" &&
         location.pathname !== "/journals" &&
         location.pathname !== "/createjournal" &&
-        location.pathname.split("/")[1] !== "journals" && <Navbar />}
+        location.pathname.split("/")[1] !== "journals" &&
+        location.pathname !== "/bigfive" && <Navbar />}
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/signup" component={SignUp} />
@@ -53,7 +54,7 @@ const Main = withRouter(({ location }) => {
         <Route path="/gamma" component={Gamma} />
         <Route path="/symphony" component={Symphony} />
         <Route path="/flow" component={Flow} />
-        <Route path="/BigFive" component={BigFive} />
+        <Route path="/bigfive" component={BigFive} />
         <Route path="/consciousness" component={Consciousness} />
         <Route path="/thebrain" component={TheBrain} />
         <Route path="/limbicsystem" component={LimbicSystem} />

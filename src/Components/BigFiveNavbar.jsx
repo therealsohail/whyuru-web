@@ -7,7 +7,7 @@ import { app } from "../firebaseConfig";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const Navbar = () => {
+const BigFiveNavbar = () => {
   const { currentUser } = useContext(AuthContext);
 
   const [navbar, setNavbar] = useState(
@@ -53,8 +53,11 @@ const Navbar = () => {
   );
 
   return (
-    <header id="header" className="header">
-      <nav id="navbar" className={navbar}>
+    <header id="header" className="header" style={{ marginBottom: 140 }}>
+      <nav
+        id="navbar"
+        className="navbar navbar-expand-sm fixed-top navbar-dark bg-dark"
+      >
         <NavLink to="/" className="navbar-brand ">
           Whyuru{" "}
         </NavLink>
@@ -185,4 +188,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default BigFiveNavbar;
