@@ -3,6 +3,7 @@ import moment from "moment";
 import InputMoment from "input-moment";
 import "input-moment/dist/input-moment.css";
 import axios from "axios";
+import { app } from "../firebaseConfig";
 
 import { Nav, Image, Button, Modal } from "react-bootstrap";
 import { client } from "../client";
@@ -29,6 +30,7 @@ class Time extends React.Component {
     showModal: false,
     modalId: null,
     value: [],
+    userId: "",
   };
 
   handleChange = (m) => {
@@ -57,6 +59,7 @@ class Time extends React.Component {
             date: this.state.date,
             time: this.state.time,
             data: this.state.data,
+            userId: this.state.userId,
           })
           .then((res) => {
             if (res) {
@@ -72,6 +75,9 @@ class Time extends React.Component {
   };
 
   componentDidMount() {
+    this.setState({
+      userId: app.auth().currentUser.uid,
+    });
     client
       .getEntries({
         content_type: this.state.type,

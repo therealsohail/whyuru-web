@@ -31,6 +31,7 @@ import Cortex from "../Pages/The Mind/Cortex";
 import Cerebellum from "../Pages/The Mind/Cerebellum";
 import Unconscious from "../Pages/The Mind/Unconscious";
 import Emotions from "../Pages/The Mind/Emotions";
+import SchedulerFunc from "../Pages/SchedulerFunc";
 
 const Main = withRouter(({ location }) => {
   return (
@@ -64,7 +65,7 @@ const Main = withRouter(({ location }) => {
         <Route path="/emotions" component={Emotions} />
         <Route path="/blog/:id" component={BlogPost} />
         <Route path="/blogs" component={Blogs} />
-        <PrivateRoute path="/scheduler" component={Scheduler} />
+        <PrivateRoute path="/scheduler" component={SchedulerFunc} />
         <PrivateRoute exact path="/journals" component={Journals} />
         <PrivateRoute path="/createjournal" component={CreateJournal} />
         <PrivateRoute

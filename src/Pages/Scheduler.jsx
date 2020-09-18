@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, NavItem, Button } from "react-bootstrap";
 
+import { app } from "../firebaseConfig";
 import schedulerPic from "../Assets/scheduler.jpg";
 import { Banner } from "../Components/Banner";
 import Sidebar from "../Components/Sidebar";
@@ -16,6 +17,8 @@ class Scheduler extends React.Component {
     friday: [],
     saturday: [],
     sunday: [],
+    userId: "",
+    loading: true,
   };
 
   sidebarCloseHandler = () => {
@@ -63,6 +66,7 @@ class Scheduler extends React.Component {
     axios
       .post("https://whyuruapi.herokuapp.com/api/WeeklySchedulers", {
         date: this.date,
+        userId: this.props.userId,
       })
       .then((res) => {
         let response = res.data;
@@ -117,7 +121,11 @@ class Scheduler extends React.Component {
 
   render() {
     let sidebar = this.state.sidebarOpen ? (
-      <Sidebar close={this.sidebarCloseHandler} sidebar="sidebar" />
+      <Sidebar
+        userId={this.state.userId}
+        close={this.sidebarCloseHandler}
+        sidebar="sidebar"
+      />
     ) : null;
     return (
       <>

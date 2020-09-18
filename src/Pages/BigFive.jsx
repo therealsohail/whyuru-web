@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import BigFiveNavbar from "../Components/BigFiveNavbar";
 
 class BigFive extends Component {
-  state = {};
+  state = {
+    quizdata: [],
+  };
+
+  componentDidMount() {}
+
   render() {
     return (
       <>
