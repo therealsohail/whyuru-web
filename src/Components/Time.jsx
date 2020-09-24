@@ -4,6 +4,7 @@ import InputMoment from "input-moment";
 import "input-moment/dist/input-moment.css";
 import axios from "axios";
 import { app } from "../firebaseConfig";
+import { Redirect } from "react-router-dom";
 
 import { Nav, Image, Button, Modal } from "react-bootstrap";
 import { client } from "../client";
@@ -66,6 +67,7 @@ class Time extends React.Component {
               alert("Data added successfully");
             }
             this.props.closeOnSave();
+            window.location.replace("/scheduler");
           })
           .catch((err) => {
             console.log(err);

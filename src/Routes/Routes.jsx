@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 
 import Home from "../Pages/Home";
-import BigFive from "../Pages/BigFive";
 import TheMind from "../Pages/TheMind";
 import Bedtime from "../Pages/Bedtime";
 import Navbar from "../Components/Navbar";
@@ -32,6 +31,9 @@ import Cerebellum from "../Pages/The Mind/Cerebellum";
 import Unconscious from "../Pages/The Mind/Unconscious";
 import Emotions from "../Pages/The Mind/Emotions";
 import SchedulerFunc from "../Pages/SchedulerFunc";
+import BigFive from "../Pages/BigFive";
+
+import Result from "../Pages/Result";
 
 const Main = withRouter(({ location }) => {
   return (
@@ -72,6 +74,7 @@ const Main = withRouter(({ location }) => {
           path="/journals/:journalId"
           component={withRouter(JournalDetail)}
         />
+        <Route path="/result" component={Result} />
       </Switch>
     </div>
   );
