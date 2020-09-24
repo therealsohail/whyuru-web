@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useHistory } from "react";
 import { Form, Button, InputGroup, Spinner, Alert } from "react-bootstrap";
-import { Link, withRouter } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 
 import { app, db } from "../firebaseConfig";
 import { signupValidator } from "../validators";
@@ -16,8 +16,6 @@ const SignUp = ({ history }) => {
   const [validate, setValidate] = useState(false);
 
   const [error, setError] = useState({});
-
-  console.log(error);
 
   const credientials = {
     fname,
@@ -40,25 +38,26 @@ const SignUp = ({ history }) => {
     if (valid) {
       setLoading(true);
       setTimeout(() => setLoading(false), 5000);
-      app
-        .auth()
-        .createUserWithEmailAndPassword(
-          credientials.email,
-          credientials.password
-        )
-        .then((res) => {
-          console.log(res);
-          return db.collection("users").doc(res.user.uid).set(userInfo);
-        })
-        .then(() => {
-          history.push("/");
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.code === "auth/email-already-in-use") {
-            setFbError("Email already in use");
-          }
-        });
+      // app
+      //   .auth()
+      //   .createUserWithEmailAndPassword(
+      //     credientials.email,
+      //     credientials.password
+      //   )
+      //   .then((res) => {
+      //     console.log(res);
+      //     return db.collection("users").doc(res.user.uid).set(userInfo);
+      //   })
+      //   .then(() => {
+      //     history.push("/");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     if (err.code === "auth/email-already-in-use") {
+      //       setFbError("Email already in use");
+      //     }
+      //   });
+      history.push("/signup/checkout");
     } else if (!valid) {
       setError({ ...errors });
     }
@@ -106,7 +105,7 @@ const SignUp = ({ history }) => {
         </div>
         <div className="form-box">
           <Form noValidate validated={validate} onSubmit={handleSubmit}>
-            <Form.Group controlId="formGroupFname">
+            <Form.Group>
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 required
@@ -118,7 +117,7 @@ const SignUp = ({ history }) => {
               />
               {fnameAlert}
             </Form.Group>
-            <Form.Group controlId="formGroupLname">
+            <Form.Group>
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 required
@@ -129,7 +128,7 @@ const SignUp = ({ history }) => {
               />
               {lnameAlert}
             </Form.Group>
-            <Form.Group controlId="formGroupEmail">
+            <Form.Group>
               <Form.Label>Email</Form.Label>
               <Form.Control
                 required
@@ -140,7 +139,7 @@ const SignUp = ({ history }) => {
               />
               {emailAlert}
             </Form.Group>
-            <Form.Group controlId="formGroupPassword">
+            <Form.Group>
               <Form.Label>Password</Form.Label>
               <InputGroup>
                 <Form.Control

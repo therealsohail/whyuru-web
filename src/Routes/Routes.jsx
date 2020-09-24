@@ -32,6 +32,7 @@ import Unconscious from "../Pages/The Mind/Unconscious";
 import Emotions from "../Pages/The Mind/Emotions";
 import SchedulerFunc from "../Pages/SchedulerFunc";
 import BigFive from "../Pages/BigFive";
+import PaymentCheckout from "../Pages/PaymentCheckout";
 
 import Result from "../Pages/Result";
 
@@ -40,13 +41,15 @@ const Main = withRouter(({ location }) => {
     <div>
       {location.pathname !== "/login" &&
         location.pathname !== "/signup" &&
+        location.pathname !== "/signup/checkout" &&
         location.pathname !== "/journals" &&
         location.pathname !== "/createjournal" &&
         location.pathname.split("/")[1] !== "journals" &&
         location.pathname !== "/bigfive" && <Navbar />}
       <Switch>
         <Route path="/" component={Home} exact />
-        <Route path="/signup" component={SignUp} />
+        <Route path="/signup" component={SignUp} exact />
+        <Route path="/signup/checkout" component={PaymentCheckout} exact />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/bedtime" component={Bedtime} />
         <PrivateRoute path="/wakeup" component={Wakeup} />
