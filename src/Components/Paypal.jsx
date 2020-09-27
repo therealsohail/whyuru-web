@@ -27,11 +27,14 @@ const PayPal = ({ credientials, history }) => {
             return db.collection("users").doc(res.user.uid).set(userInfo);
           })
           .then(() => {
-            alert("Paypent successfull by: " + details.payer.name.given_name);
+            // alert("Paypent successfull by: " + details.payer.name.given_name);
             history.push("/login");
           })
           .catch((err) => {
             console.log(err);
+            if (err.code === "auth/email-already-in-use") {
+              alert("Email Already in use");
+            }
           });
       }}
       options={{
