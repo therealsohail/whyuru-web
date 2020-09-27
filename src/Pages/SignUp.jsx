@@ -1,9 +1,9 @@
-import React, { useState, useHistory } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, InputGroup, Spinner, Alert } from "react-bootstrap";
 import { Link, Redirect, withRouter } from "react-router-dom";
 
-import { app, db } from "../firebaseConfig";
 import { signupValidator } from "../validators";
+import { AuthContext } from "../Context/AuthContext";
 
 const SignUp = ({ history }) => {
   const [fname, setFname] = useState("");
@@ -16,6 +16,8 @@ const SignUp = ({ history }) => {
   const [validate, setValidate] = useState(false);
 
   const [error, setError] = useState({});
+
+  const { currentUser } = useContext(AuthContext);
 
   const credientials = {
     fname,
@@ -30,7 +32,7 @@ const SignUp = ({ history }) => {
     email: credientials.email,
     createdAt: new Date().toISOString(),
   };
-
+  const { errors, valid } = signupValidator(credientials);
   const handleSubmit = (e) => {
     e.preventDefault();
     const { errors, valid } = signupValidator(credientials);
@@ -57,7 +59,7 @@ const SignUp = ({ history }) => {
       //       setFbError("Email already in use");
       //     }
       //   });
-      history.push("/signup/checkout");
+      //history.push("/signup/checkout");
     } else if (!valid) {
       setError({ ...errors });
     }
@@ -93,6 +95,10 @@ const SignUp = ({ history }) => {
     } else {
       x.type = "password";
     }
+  }
+
+  if (currentUser) {
+    return <Redirect to="/" />;
   }
 
   return (
@@ -162,19 +168,53 @@ const SignUp = ({ history }) => {
                 {passwordAlert}
               </InputGroup>
             </Form.Group>
-
-            <Button variant="outline-primary" disabled={loading} type="submit">
-              {loading ? (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              ) : null}
-              Submit
-            </Button>
+            {valid ? (
+              <Link
+                to={{
+                  pathname: "/signup/checkout",
+                  state: {
+                    fname: credientials.fname,
+                    lname: credientials.lname,
+                    email: credientials.email,
+                    password: credientials.password,
+                  },
+                }}
+              >
+                <Button
+                  variant="outline-primary"
+                  disabled={loading}
+                  type="submit"
+                >
+                  {loading ? (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  ) : null}
+                  Submit
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                variant="outline-primary"
+                disabled={loading}
+                type="submit"
+              >
+                {loading ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                ) : null}
+                Submit
+              </Button>
+            )}
           </Form>
         </div>
       </div>

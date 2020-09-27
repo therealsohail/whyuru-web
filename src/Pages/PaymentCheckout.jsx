@@ -1,18 +1,69 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect, Route } from "react-router-dom";
+import PayPal from "../Components/Paypal";
+import { signupValidator } from "../validators";
 
-const PaymentCheckout = ({ history }) => {
+const PaymentCheckout = ({ history, location }) => {
+  console.log(location.state);
   const [loading, setLoading] = useState(false);
+  const [checkout, setCheckout] = useState(false);
+  const [valid, setValid] = useState(true);
+  const [credientials, setCredientials] = useState({});
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (location.state === undefined) {
+      setValid(false);
+    } else {
+      setValid(true);
+      setCredientials({
+        fname: location.state.fname,
+        lname: location.state.lname,
+        email: location.state.email,
+        password: location.state.password,
+      });
+    }
+  }, []);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   setLoading(true);
+  //   setTimeout(() => setLoading(false), 5000);
+  // };
+  const paypalCheckout = (e) => {
     e.preventDefault();
-
-    setLoading(true);
-    setTimeout(() => setLoading(false), 5000);
+    setCheckout(true);
+  };
+  const handleCheckoutButtons = () => {
+    if (checkout === false) {
+      return (
+        <Button
+          onClick={paypalCheckout}
+          variant="outline-primary"
+          disabled={loading}
+          type="submit"
+        >
+          {loading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : null}
+          Paypal Checkout
+        </Button>
+      );
+    } else {
+      return <PayPal credientials={credientials} />;
+    }
   };
 
-  return (
+  return valid ? (
     <div className="main row">
       <div className="signup col-sm-8">
         <div className="signup-heading">
@@ -21,28 +72,14 @@ const PaymentCheckout = ({ history }) => {
         </div>
         <div className="form-box">
           <p>
-            Lorem Ipsum Lorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem
-            IpsumLorem IpsumLorem IpsumLorem Ipsum Lorem Ipsum Lorem IpsumLorem
-            IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem
-            IpsumLorem Ipsum Lorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem
-            IpsumLorem IpsumLorem IpsumLorem IpsumLorem Ipsum Lorem IpsumLorem
-            IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem
-            IpsumLorem Ipsum Lorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem
-            IpsumLorem IpsumLorem IpsumLorem Ipsum
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged.
           </p>
-
-          <Button variant="outline-primary" disabled={loading} type="submit">
-            {loading ? (
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-            ) : null}
-            Proceed Checkout
-          </Button>
+          {handleCheckoutButtons()}
         </div>
       </div>
       <div className="poster col-sm-4">
@@ -54,6 +91,8 @@ const PaymentCheckout = ({ history }) => {
         </div>
       </div>
     </div>
+  ) : (
+    <Redirect to="/signup" />
   );
 };
 
