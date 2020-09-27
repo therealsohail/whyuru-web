@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { Link, withRouter, Redirect, Route } from "react-router-dom";
 import PayPal from "../Components/Paypal";
+import { db } from "../firebaseConfig";
 import { signupValidator } from "../validators";
 
 const PaymentCheckout = ({ history, location }) => {
@@ -35,7 +36,19 @@ const PaymentCheckout = ({ history, location }) => {
   // };
   const paypalCheckout = (e) => {
     e.preventDefault();
-    setCheckout(true);
+    // console.log(location.state.email);
+    return db
+      .collection("users")
+      .where("email", "==", location.state.email)
+      .get()
+      .then((querySnapshot) => {
+        // console.log();
+        if (querySnapshot.docs.length > 0) {
+          alert("Email already exists");
+        } else {
+          setCheckout(true);
+        }
+      });
   };
   const handleCheckoutButtons = () => {
     if (checkout === false) {
