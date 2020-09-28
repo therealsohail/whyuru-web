@@ -33,22 +33,10 @@ export const signupValidator = (data) => {
     errors.password = "Password must be more than 6 characters";
   }
 
-  return [
-    {
-      errors,
-      valid: Object.keys(errors).length === 0 ? true : false,
-    },
-    db
-      .collection("users")
-      .where("email", "==", data.email)
-      .get()
-      .then((querySnapshot) => {
-        // console.log();
-        if (querySnapshot.docs.length > 0) {
-          errors.email = "Email already exist";
-        }
-      }),
-  ];
+  return {
+    errors,
+    valid: Object.keys(errors).length === 0 ? true : false,
+  };
 };
 
 export const validateLogin = (email, password) => {

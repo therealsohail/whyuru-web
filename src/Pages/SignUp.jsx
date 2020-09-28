@@ -15,6 +15,8 @@ const SignUp = ({ history }) => {
   const [fbError, setFbError] = useState();
   const [passwordError, setPasswordError] = useState(null);
   const [emailError, setEmailError] = useState(null);
+  const [proceed, setProceed] = useState(false);
+  const [emailCount, setEmailCount] = useState(null);
 
   const [validate, setValidate] = useState(false);
 
@@ -36,41 +38,49 @@ const SignUp = ({ history }) => {
     createdAt: new Date().toISOString(),
   };
 
-  const [{ errors, valid }] = signupValidator(credientials);
+  const { errors, valid } = signupValidator(credientials);
   const handleSubmit = (e) => {
     e.preventDefault();
-    const [{ errors, valid }] = signupValidator(credientials);
-
+    setValidate(true);
+    const { errors, valid } = signupValidator(credientials);
     if (valid) {
-      setLoading(true);
-      setTimeout(() => setLoading(false), 5000);
-      // app
-      //   .auth()
-      //   .createUserWithEmailAndPassword(
-      //     credientials.email,
-      //     credientials.password
-      //   )
-      //   .then((res) => {
-      //     console.log(res);
-      //     return db.collection("users").doc(res.user.uid).set(userInfo);
-      //   })
-      //   .then(() => {
-      //     history.push("/");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     if (err.code === "auth/email-already-in-use") {
-      //       setFbError("Email already in use");
-      //     }
-      //   });
-      //history.push("/signup/checkout");
+      if (valid && proceed) {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 5000);
+      }
+
+      db.collection("users")
+        .where("email", "==", email)
+        .get()
+        .then((querySnapshot) => {
+          setEmailCount(querySnapshot.docs.length);
+          console.log(querySnapshot.docs.length);
+          if (querySnapshot.docs.length > 0) {
+            setEmailError("Email already exist");
+          } else {
+            setEmailError(null);
+            setProceed(true);
+          }
+        });
     } else if (!valid) {
       setError({ ...errors });
-      setPasswordError("Password should be more than 6 character");
-      setEmailError("Email already exist");
-    }
 
-    setValidate(true);
+      if (password.length < 6) {
+        setPasswordError("Password must be greater than 6 letters.");
+      } else if (password.length >= 6) {
+        setPasswordError(null);
+      }
+      db.collection("users")
+        .where("email", "==", email)
+        .get()
+        .then((querySnapshot) => {
+          setEmailCount(querySnapshot.docs.length);
+          console.log(querySnapshot.docs.length);
+          if (querySnapshot.docs.length > 0) {
+            setEmailError("Email already exist");
+          }
+        });
+    }
   };
 
   const wrongCred =
@@ -95,59 +105,51 @@ const SignUp = ({ history }) => {
     </Form.Control.Feedback>
   ) : null;
 
-  const passwordLengthAlert =
-    passwordError === "Password should be more than 6 character" ? (
-      <div className="col-sm-12">
-        <div
-          class="alert alertBox alert-danger alert-dismissible fade show"
-          role="alert"
-        >
-          Password should be more than 6 character
-          <button
-            type="button"
-            class="close"
-            data-dismiss="alert"
-            aria-label="Close"
+  const showPasswordError = () => {
+    if (passwordError !== null) {
+      return (
+        <div className="col-sm-12">
+          <div
+            class="alert alertBox alert-danger alert-dismissible fade show"
+            role="alert"
           >
-            <span aria-hidden="true">&times;</span>
-          </button>
+            Password should be more than 6 character
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
-      </div>
-    ) : null;
+      );
+    }
+  };
 
-  // errors.password === "Password must be more than 6 characters" ? (
-  //   <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  //     Password should be more than 6 character
-  //     <button
-  //       type="button"
-  //       class="close"
-  //       data-dismiss="alert"
-  //       aria-label="Close"
-  //     >
-  //       <span aria-hidden="true">&times;</span>
-  //     </button>
-  //   </div>
-  // ) : null;
-
-  const emailAlreadyInUse =
-    emailError === "Email already exist" ? (
-      <div className="col-sm-12">
-        <div
-          class="alert alertBox alert-danger alert-dismissible fade show"
-          role="alert"
-        >
-          Email Already exists
-          <button
-            type="button"
-            class="close"
-            data-dismiss="alert"
-            aria-label="Close"
+  const showEmailError = () => {
+    if (emailError !== null) {
+      return (
+        <div className="col-sm-12">
+          <div
+            class="alert alertBox alert-danger alert-dismissible fade show"
+            role="alert"
           >
-            <span aria-hidden="true">&times;</span>
-          </button>
+            Email Already exists
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
-      </div>
-    ) : null;
+      );
+    }
+  };
 
   function showPassword() {
     var x = document.getElementById("password");
@@ -161,15 +163,16 @@ const SignUp = ({ history }) => {
   if (currentUser) {
     return <Redirect to="/" />;
   }
-  console.log(errors, passwordLengthAlert);
+  console.log(errors, valid, proceed);
   return (
     <div className="main row">
       <div className="signup col-sm-8">
         <div className="signup-heading">
           <h1>SignUp</h1>
           <hr className="deco-line" />
-          {emailAlreadyInUse}
-          {passwordLengthAlert}
+          {showEmailError()}
+
+          {showPasswordError()}
           {wrongCred}
         </div>
         <div className="form-box">
@@ -231,7 +234,7 @@ const SignUp = ({ history }) => {
                 {passwordAlert}
               </InputGroup>
             </Form.Group>
-            {valid ? (
+            {valid && proceed ? (
               <Link
                 to={{
                   pathname: "/signup/checkout",
@@ -244,7 +247,7 @@ const SignUp = ({ history }) => {
                 }}
               >
                 <Button
-                  variant="outline-primary"
+                  variant="outline-success"
                   disabled={loading}
                   type="submit"
                 >
@@ -257,7 +260,7 @@ const SignUp = ({ history }) => {
                       aria-hidden="true"
                     />
                   ) : null}
-                  Submit
+                  Proceed
                 </Button>
               </Link>
             ) : (
