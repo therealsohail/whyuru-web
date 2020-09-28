@@ -207,6 +207,8 @@
 .poster {
   height: 110vh;
   background-color: #3288bf;
+  position: fixed;
+  right: 0;
 }
 
 .poster .text {
@@ -234,6 +236,11 @@
   .poster {
     display: none;
   }
+}
+
+.alertBox {
+  margin: auto;
+  margin-bottom: 10px;
 }
 
 .sidebar {
@@ -629,3 +636,4 @@ input[type="checkbox"] {
   border-radius: 10px;
   width: 20%;
 }
+/*# sourceMappingURL=Style.css.map */

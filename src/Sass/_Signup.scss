@@ -34,6 +34,8 @@
 .poster {
   height: 110vh;
   background-color: #3288bf;
+  position: fixed;
+  right: 0;
 
   .text {
     color: #fff;
@@ -59,4 +61,10 @@
   .poster {
     display: none;
   }
+}
+
+.alertBox {
+  //width: 38rem;
+  margin: auto;
+  margin-bottom: 10px;
 }

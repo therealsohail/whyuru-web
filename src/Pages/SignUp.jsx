@@ -4,6 +4,7 @@ import { Link, Redirect, withRouter } from "react-router-dom";
 
 import { signupValidator } from "../validators";
 import { AuthContext } from "../Context/AuthContext";
+import { db } from "../firebaseConfig";
 
 const SignUp = ({ history }) => {
   const [fname, setFname] = useState("");
@@ -12,6 +13,8 @@ const SignUp = ({ history }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [fbError, setFbError] = useState();
+  const [passwordError, setPasswordError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
 
   const [validate, setValidate] = useState(false);
 
@@ -32,10 +35,11 @@ const SignUp = ({ history }) => {
     email: credientials.email,
     createdAt: new Date().toISOString(),
   };
-  const { errors, valid } = signupValidator(credientials);
+
+  const [{ errors, valid }] = signupValidator(credientials);
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { errors, valid } = signupValidator(credientials);
+    const [{ errors, valid }] = signupValidator(credientials);
 
     if (valid) {
       setLoading(true);
@@ -62,7 +66,10 @@ const SignUp = ({ history }) => {
       //history.push("/signup/checkout");
     } else if (!valid) {
       setError({ ...errors });
+      setPasswordError("Password should be more than 6 character");
+      setEmailError("Email already exist");
     }
+
     setValidate(true);
   };
 
@@ -88,6 +95,60 @@ const SignUp = ({ history }) => {
     </Form.Control.Feedback>
   ) : null;
 
+  const passwordLengthAlert =
+    passwordError === "Password should be more than 6 character" ? (
+      <div className="col-sm-12">
+        <div
+          class="alert alertBox alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          Password should be more than 6 character
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    ) : null;
+
+  // errors.password === "Password must be more than 6 characters" ? (
+  //   <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  //     Password should be more than 6 character
+  //     <button
+  //       type="button"
+  //       class="close"
+  //       data-dismiss="alert"
+  //       aria-label="Close"
+  //     >
+  //       <span aria-hidden="true">&times;</span>
+  //     </button>
+  //   </div>
+  // ) : null;
+
+  const emailAlreadyInUse =
+    emailError === "Email already exist" ? (
+      <div className="col-sm-12">
+        <div
+          class="alert alertBox alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          Email Already exists
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    ) : null;
+
   function showPassword() {
     var x = document.getElementById("password");
     if (x.type === "password") {
@@ -100,13 +161,15 @@ const SignUp = ({ history }) => {
   if (currentUser) {
     return <Redirect to="/" />;
   }
-
+  console.log(errors, passwordLengthAlert);
   return (
     <div className="main row">
       <div className="signup col-sm-8">
         <div className="signup-heading">
           <h1>SignUp</h1>
           <hr className="deco-line" />
+          {emailAlreadyInUse}
+          {passwordLengthAlert}
           {wrongCred}
         </div>
         <div className="form-box">

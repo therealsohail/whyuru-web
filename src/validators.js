@@ -1,3 +1,5 @@
+import { db } from "./firebaseConfig";
+
 const isEmpty = (string) => {
   if (string.trim() === "") return true;
   else return false;
@@ -27,11 +29,26 @@ export const signupValidator = (data) => {
   if (isEmpty(data.lname)) {
     errors.lname = "Must not be empty";
   }
+  if (data.password.length < 6) {
+    errors.password = "Password must be more than 6 characters";
+  }
 
-  return {
-    errors,
-    valid: Object.keys(errors).length === 0 ? true : false,
-  };
+  return [
+    {
+      errors,
+      valid: Object.keys(errors).length === 0 ? true : false,
+    },
+    db
+      .collection("users")
+      .where("email", "==", data.email)
+      .get()
+      .then((querySnapshot) => {
+        // console.log();
+        if (querySnapshot.docs.length > 0) {
+          errors.email = "Email already exist";
+        }
+      }),
+  ];
 };
 
 export const validateLogin = (email, password) => {
